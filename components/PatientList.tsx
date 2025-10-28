@@ -28,7 +28,7 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
       <AddPatientModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={onAddPatient} />
       <div className="p-4 md:p-8 bg-background min-h-full">
         <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
-          <h1 className="text-3xl font-bold text-text-primary">{t('patientList.title')}</h1>
+          <h1 className="hidden md:block text-3xl font-bold text-text-primary">{t('patientList.title')}</h1>
           <button 
             onClick={() => setIsModalOpen(true)}
             className="bg-brand-primary text-white px-4 py-2 rounded-lg shadow hover:bg-brand-dark transition-colors w-full md:w-auto"

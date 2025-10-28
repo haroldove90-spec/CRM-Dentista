@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext, ReactNode, useMemo } from '
 const translations = {
   en: {
     sidebar: {
-      title: 'DentalSys',
+      title: 'Dra. Magda Zavala',
       dashboard: 'Dashboard',
       patients: 'Patients',
       agenda: 'Agenda',
@@ -124,8 +124,8 @@ const translations = {
   },
   es: {
     sidebar: {
-      title: 'DentalSys',
-      dashboard: 'Dashboard',
+      title: 'Dra. Magda Zavala',
+      dashboard: 'Escritorio',
       patients: 'Pacientes',
       agenda: 'Agenda',
       treatmentPlans: 'Planes de Tratamiento',
@@ -133,7 +133,7 @@ const translations = {
       logout: 'Cerrar Sesión',
     },
     dashboard: {
-      title: 'Dashboard',
+      title: 'Escritorio',
       totalPatients: 'Pacientes Totales',
       upcomingAppointments: 'Citas de Hoy',
       activePlans: 'Tratamientos Totales',

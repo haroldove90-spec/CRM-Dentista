@@ -58,7 +58,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ appointments, patien
         selectedDate={currentDate.toISOString().split('T')[0]}
       />
       <div className="p-4 md:p-8 bg-background min-h-full">
-        <h1 className="text-3xl font-bold text-text-primary mb-6">{t('agenda.title')}</h1>
+        <h1 className="hidden md:block text-3xl font-bold text-text-primary mb-6">{t('agenda.title')}</h1>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* Header with Date Navigation */}

@@ -31,7 +31,7 @@ export const Settings: React.FC = () => {
 
   return (
     <div className="p-4 md:p-8 bg-background min-h-full">
-      <h1 className="text-3xl font-bold text-text-primary mb-6">{t('settings.title')}</h1>
+      <h1 className="hidden md:block text-3xl font-bold text-text-primary mb-6">{t('settings.title')}</h1>
       
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Clinic Information Card */}

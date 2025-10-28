@@ -65,7 +65,7 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
     return (
         <div className="p-4 md:p-8 bg-background min-h-full">
             {/* Header */}
-            <div className="flex items-center mb-6">
+            <div className="hidden md:flex items-center mb-6">
                 <button onClick={onBack} className="p-2 mr-4 rounded-full hover:bg-gray-200">
                     <BackArrowIcon />
                 </button>

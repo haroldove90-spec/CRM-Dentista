@@ -8,7 +8,10 @@ import { TreatmentPlans } from './components/TreatmentPlans.tsx';
 import { Settings } from './components/Settings.tsx';
 import { mockPatients, mockAppointments, mockTreatmentPlans } from './data/mockData.ts';
 import type { Patient, Appointment, OdontogramData, TreatmentPlan } from './types.ts';
-import { MenuIcon } from './components/icons/Icon.tsx';
+// FIX: Import ToothStatus to use the enum value instead of a string literal.
+import { ToothStatus } from './types.ts';
+import { MenuIcon, BackArrowIcon } from './components/icons/Icon.tsx';
+import { useTranslation } from './context/LanguageContext.tsx';
 
 export type View = 'dashboard' | 'patients' | 'agenda' | 'treatment_plans' | 'settings';
 
@@ -21,6 +24,8 @@ const App: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>(mockPatients);
   const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
   const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>(mockTreatmentPlans);
+  
+  const { t } = useTranslation();
 
   const selectedPatient = patients.find(p => p.id === selectedPatientId) || null;
 
@@ -37,7 +42,8 @@ const App: React.FC = () => {
     const generateInitialOdontogram = (): OdontogramData => {
         const odontogram: OdontogramData = {};
         for (let i = 1; i <= 32; i++) {
-          odontogram[i] = { id: i, status: 'Healthy' };
+          // FIX: Use ToothStatus enum instead of string literal 'Healthy' to conform to the type definition.
+          odontogram[i] = { id: i, status: ToothStatus.Healthy };
         }
         return odontogram;
     };
@@ -76,9 +82,23 @@ const App: React.FC = () => {
     setTreatmentPlans([...treatmentPlans, newPlan]);
   };
 
+  const getActiveViewTitle = () => {
+    if (activeView === 'patients' && selectedPatient) {
+      return t('patientDetail.title');
+    }
+    switch (activeView) {
+      case 'dashboard': return t('dashboard.title');
+      case 'patients': return t('patientList.title');
+      case 'agenda': return t('agenda.title');
+      case 'treatment_plans': return t('treatmentPlans.title');
+      case 'settings': return t('settings.title');
+      default: return '';
+    }
+  };
+
   const renderContent = () => {
     if (activeView === 'patients' && selectedPatient) {
-      return <PatientDetail patient={selectedPatient} onBack={() => setSelectedPatientId(null)} onUpdatePatient={handleUpdatePatient} />;
+      return <PatientDetail patient={selectedPatient} onBack={clearSelectedPatient} onUpdatePatient={handleUpdatePatient} />;
     }
     switch (activeView) {
       case 'dashboard':
@@ -106,11 +126,22 @@ const App: React.FC = () => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
        {isSidebarOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
-      <main className="flex-1 overflow-y-auto relative">
-        <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-2 m-4 rounded-md bg-white shadow fixed top-0 left-0 z-10">
-            <MenuIcon />
-        </button>
-        {renderContent()}
+      <main className="flex-1 flex flex-col overflow-hidden">
+        <header className="md:hidden flex-shrink-0 flex items-center p-4 bg-brand-primary text-white shadow-md z-10">
+            {selectedPatient ? (
+                <button onClick={clearSelectedPatient} className="mr-4 text-white">
+                    <BackArrowIcon />
+                </button>
+            ) : (
+                <button onClick={() => setIsSidebarOpen(true)} className="mr-4 text-white">
+                    <MenuIcon />
+                </button>
+            )}
+            <h1 className="text-xl font-bold truncate">{getActiveViewTitle()}</h1>
+        </header>
+        <div className="flex-1 overflow-y-auto">
+            {renderContent()}
+        </div>
       </main>
     </div>
   );
