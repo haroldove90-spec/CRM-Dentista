@@ -1,8 +1,10 @@
-
 import React, { useState } from 'react';
-import type { Patient } from '../types';
-import { useTranslation } from '../context/LanguageContext';
-import { AddPatientModal } from './AddPatientModal';
+// FIX: Add .ts extension to file import.
+import type { Patient } from '../types.ts';
+// FIX: Add .tsx extension to file import.
+import { useTranslation } from '../context/LanguageContext.tsx';
+// FIX: Add .tsx extension to file import.
+import { AddPatientModal } from './AddPatientModal.tsx';
 
 interface PatientListProps {
   patients: Patient[];

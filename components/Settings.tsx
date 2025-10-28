@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useTranslation } from '../context/LanguageContext';
+// FIX: Add .tsx extension to file import.
+import { useTranslation } from '../context/LanguageContext.tsx';
 
 export const Settings: React.FC = () => {
   const { t } = useTranslation();

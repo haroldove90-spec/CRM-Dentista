@@ -1,9 +1,12 @@
-
 import React, { useState } from 'react';
-import type { Appointment, Patient } from '../types';
-import { useLanguage, useTranslation } from '../context/LanguageContext';
-import { AddAppointmentModal } from './AddAppointmentModal';
-import { ChevronLeftIcon, ChevronRightIcon } from './icons/Icon';
+// FIX: Add .ts extension to file import.
+import type { Appointment, Patient } from '../types.ts';
+// FIX: Add .tsx extension to file import.
+import { useLanguage, useTranslation } from '../context/LanguageContext.tsx';
+// FIX: Add .tsx extension to file import.
+import { AddAppointmentModal } from './AddAppointmentModal.tsx';
+// FIX: Add .tsx extension to file import.
+import { ChevronLeftIcon, ChevronRightIcon } from './icons/Icon.tsx';
 
 interface CalendarViewProps {
   appointments: Appointment[];

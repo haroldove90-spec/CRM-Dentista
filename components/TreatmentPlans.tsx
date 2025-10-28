@@ -1,8 +1,10 @@
-
 import React, { useState } from 'react';
-import type { TreatmentPlan, Patient } from '../types';
-import { useTranslation } from '../context/LanguageContext';
-import { CreateTreatmentPlanModal } from './CreateTreatmentPlanModal';
+// FIX: Add .ts extension to file import.
+import type { TreatmentPlan, Patient } from '../types.ts';
+// FIX: Add .tsx extension to file import.
+import { useTranslation } from '../context/LanguageContext.tsx';
+// FIX: Add .tsx extension to file import.
+import { CreateTreatmentPlanModal } from './CreateTreatmentPlanModal.tsx';
 
 interface TreatmentPlansProps {
   plans: TreatmentPlan[];

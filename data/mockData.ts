@@ -1,5 +1,5 @@
-import type { Patient, Appointment, OdontogramData, TreatmentPlan, ClinicalFile } from '../types';
-import { ToothStatus } from '../types';
+import type { Patient, Appointment, OdontogramData, TreatmentPlan, ClinicalFile } from '../types.ts';
+import { ToothStatus } from '../types.ts';
 
 const generateInitialOdontogram = (): OdontogramData => {
   const odontogram: OdontogramData = {};

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import type { Patient, TreatmentPlan, TreatmentPlanProcedure } from '../types';
-import { useTranslation } from '../context/LanguageContext';
-import { CloseIcon } from './icons/Icon';
-import { commonProcedures, Procedure } from '../data/procedures';
-import { generateTreatmentPlan } from '../services/geminiService';
+// FIX: Add .ts extension to file import.
+import type { Patient, TreatmentPlan, TreatmentPlanProcedure } from '../types.ts';
+// FIX: Add .tsx extension to file import.
+import { useTranslation } from '../context/LanguageContext.tsx';
+// FIX: Add .tsx extension to file import.
+import { CloseIcon } from './icons/Icon.tsx';
+// FIX: Add .ts extension to file import.
+import { commonProcedures } from '../data/procedures.ts';
+// FIX: Add .ts extension to file import.
+import { generateTreatmentPlan } from '../services/geminiService.ts';
 
 interface CreateTreatmentPlanModalProps {
   isOpen: boolean;

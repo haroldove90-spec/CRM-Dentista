@@ -1,6 +1,8 @@
 import React from 'react';
-import type { OdontogramData, Tooth } from '../types';
-import { ToothStatus } from '../types';
+// FIX: Add .ts extension to file import.
+import type { OdontogramData, Tooth } from '../types.ts';
+// FIX: Add .ts extension to file import.
+import { ToothStatus } from '../types.ts';
 
 interface OdontogramProps {
   data: OdontogramData;

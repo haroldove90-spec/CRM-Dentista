@@ -1,8 +1,10 @@
-
 import React from 'react';
-import type { View } from '../App';
-import { DashboardIcon, PatientsIcon, CalendarIcon, SettingsIcon, ToothIcon, LogoutIcon, CloseIcon, TreatmentPlanIcon } from './icons/Icon';
-import { useLanguage, useTranslation } from '../context/LanguageContext';
+// FIX: Add .tsx extension to file import.
+import type { View } from '../App.tsx';
+// FIX: Add .tsx extension to file import.
+import { DashboardIcon, PatientsIcon, CalendarIcon, SettingsIcon, ToothIcon, LogoutIcon, CloseIcon, TreatmentPlanIcon } from './icons/Icon.tsx';
+// FIX: Add .tsx extension to file import.
+import { useLanguage, useTranslation } from '../context/LanguageContext.tsx';
 
 interface SidebarProps {
   activeView: View;

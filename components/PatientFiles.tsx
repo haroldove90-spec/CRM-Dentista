@@ -1,8 +1,10 @@
-
 import React, { useRef } from 'react';
-import type { Patient, ClinicalFile } from '../types';
-import { useTranslation } from '../context/LanguageContext';
-import { UploadIcon, FileIcon, ImageIcon } from './icons/Icon';
+// FIX: Add .ts extension to file import.
+import type { Patient, ClinicalFile } from '../types.ts';
+// FIX: Add .tsx extension to file import.
+import { useTranslation } from '../context/LanguageContext.tsx';
+// FIX: Add .tsx extension to file import.
+import { UploadIcon, FileIcon, ImageIcon } from './icons/Icon.tsx';
 
 interface PatientFilesProps {
   patient: Patient;

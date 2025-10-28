@@ -1,272 +1,276 @@
+import React, { createContext, useState, useContext, ReactNode, useMemo } from 'react';
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-// Spanish translations (Primary)
-const es = {
-  "sidebar": {
-    "title": "Dra. Magda Zavala",
-    "dashboard": "Dashboard",
-    "patients": "Pacientes",
-    "agenda": "Agenda",
-    "treatmentPlans": "Planes de Tratamiento",
-    "settings": "Configuración",
-    "logout": "Cerrar Sesión"
+// Define translations
+const translations = {
+  en: {
+    sidebar: {
+      title: 'DentalSys',
+      dashboard: 'Dashboard',
+      patients: 'Patients',
+      agenda: 'Agenda',
+      treatmentPlans: 'Treatment Plans',
+      settings: 'Settings',
+      logout: 'Logout',
+    },
+    dashboard: {
+      title: 'Dashboard',
+      totalPatients: 'Total Patients',
+      upcomingAppointments: 'Today\'s Appointments',
+      activePlans: 'Total Treatments',
+      agenda: 'Today\'s Agenda',
+      patientActivity: 'Patient Activity',
+      noAppointments: 'No appointments for today.',
+      view: 'View Profile',
+      patient: 'Patient',
+      time: 'Time',
+      reason: 'Reason',
+    },
+    patientList: {
+      title: 'Patient List',
+      addNew: 'Add New Patient',
+      searchPlaceholder: 'Search by name, email, or phone...',
+      name: 'Name',
+      contact: 'Contact',
+      dob: 'Date of Birth',
+      actions: 'Actions',
+    },
+    patientDetail: {
+        title: 'Patient Details',
+        gender: 'Gender',
+        email: 'Email',
+        address: 'Address',
+        medicalHistory: 'Medical History',
+        notes: 'Clinical Notes',
+        aiSummary: 'AI Summary',
+        generateSummaryPrompt: 'Generate a concise summary of the patient\'s clinical notes.',
+        generateSummary: 'Generate with Gemini',
+        generating: 'Generating...',
+        overview: 'Overview',
+        odontogram: 'Odontogram',
+        treatments: 'Treatments',
+        files: 'Files',
+        treatmentHistory: 'Treatment History',
+        description: 'Description',
+        cost: 'Cost',
+        paid: 'Paid',
+        yes: 'Yes',
+        no: 'No',
+        clinicalFiles: 'Clinical Files',
+        uploadFile: 'Upload File',
+        noFiles: 'No clinical files have been uploaded.',
+    },
+    agenda: {
+        title: 'Appointment Calendar',
+        today: 'Today',
+    },
+    treatmentPlans: {
+        title: 'Treatment Plans',
+        addNew: 'Create New Plan',
+        patient: 'Patient',
+        plan: 'Plan Name',
+        status: 'Status',
+        totalCost: 'Total Cost',
+        details: 'Details',
+        statusProposed: 'Proposed',
+        statusInProgress: 'In Progress',
+        statusCompleted: 'Completed',
+    },
+    settings: {
+        title: 'Settings',
+        clinicInfo: 'Clinic Information',
+        clinicName: 'Clinic Name',
+        phone: 'Phone',
+        address: 'Address',
+        email: 'Email',
+        userProfile: 'User Profile',
+        name: 'Name',
+        specialization: 'Specialization',
+        billingCurrency: 'Billing & Currency',
+        currency: 'Currency',
+        save: 'Save Changes',
+        saveSuccess: 'Settings saved successfully!',
+    },
+    modals: {
+        fillAllFields: 'Please fill all required fields.',
+        addAppointmentTitle: 'Add New Appointment',
+        date: 'Date',
+        selectPatient: 'Select a patient',
+        duration: 'Duration (minutes)',
+        cancel: 'Cancel',
+        save: 'Save',
+        addPatientTitle: 'Add New Patient',
+        patientName: 'Patient Name',
+        dob: 'Date of Birth',
+        gender: 'Gender',
+        male: 'Male',
+        female: 'Female',
+        other: 'Other',
+        phone: 'Phone Number',
+        email: 'Email Address',
+        address: 'Address',
+        medicalHistory: 'Medical History',
+        notes: 'Notes',
+        avatarUrl: 'Avatar URL',
+        createPlanTitle: 'Create Treatment Plan',
+        selectProcedure: 'Select a procedure',
+        manualCreation: 'Manual Creation',
+        aiCreation: 'AI-Powered Creation',
+        aiPlaceholder: 'Describe the patient\'s condition or desired treatment (e.g., "Patient needs a crown on tooth #14 and has cavities on #3 and #19. Also wants teeth whitening.")',
+        generateWithAI: 'Generate with Gemini',
+        proceduresList: 'Procedures in Plan',
+        noProcedures: 'No procedures added yet.',
+        savePlan: 'Save Plan',
+    }
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "todaysAppointments": "Citas de Hoy",
-    "totalPatients": "Pacientes Totales",
-    "monthlyRevenue": "Ingresos Mensuales",
-    "pendingInvoices": "Facturas Pendientes",
-    "recentPatients": "Pacientes Recientes",
-    "time": "Hora",
-    "patient": "Paciente",
-    "reason": "Motivo",
-    "noAppointments": "No hay citas para hoy.",
-    "view": "Ver"
+  es: {
+    sidebar: {
+      title: 'DentalSys',
+      dashboard: 'Dashboard',
+      patients: 'Pacientes',
+      agenda: 'Agenda',
+      treatmentPlans: 'Planes de Tratamiento',
+      settings: 'Configuración',
+      logout: 'Cerrar Sesión',
+    },
+    dashboard: {
+      title: 'Dashboard',
+      totalPatients: 'Pacientes Totales',
+      upcomingAppointments: 'Citas de Hoy',
+      activePlans: 'Tratamientos Totales',
+      agenda: 'Agenda de Hoy',
+      patientActivity: 'Actividad de Pacientes',
+      noAppointments: 'No hay citas para hoy.',
+      view: 'Ver Ficha',
+      patient: 'Paciente',
+      time: 'Hora',
+      reason: 'Motivo',
+    },
+    patientList: {
+      title: 'Lista de Pacientes',
+      addNew: 'Añadir Nuevo Paciente',
+      searchPlaceholder: 'Buscar por nombre, email o teléfono...',
+      name: 'Nombre',
+      contact: 'Contacto',
+      dob: 'Fecha de Nacimiento',
+      actions: 'Acciones',
+    },
+    patientDetail: {
+        title: 'Ficha del Paciente',
+        gender: 'Género',
+        email: 'Email',
+        address: 'Dirección',
+        medicalHistory: 'Historial Médico',
+        notes: 'Notas Clínicas',
+        aiSummary: 'Resumen con IA',
+        generateSummaryPrompt: 'Genera un resumen conciso de las notas clínicas del paciente.',
+        generateSummary: 'Generar con Gemini',
+        generating: 'Generando...',
+        overview: 'Resumen',
+        odontogram: 'Odontograma',
+        treatments: 'Tratamientos',
+        files: 'Archivos',
+        treatmentHistory: 'Historial de Tratamientos',
+        description: 'Descripción',
+        cost: 'Costo',
+        paid: 'Pagado',
+        yes: 'Sí',
+        no: 'No',
+        clinicalFiles: 'Archivos Clínicos',
+        uploadFile: 'Subir Archivo',
+        noFiles: 'No se han subido archivos clínicos.',
+    },
+    agenda: {
+        title: 'Calendario de Citas',
+        today: 'Hoy',
+    },
+    treatmentPlans: {
+        title: 'Planes de Tratamiento',
+        addNew: 'Crear Nuevo Plan',
+        patient: 'Paciente',
+        plan: 'Nombre del Plan',
+        status: 'Estado',
+        totalCost: 'Costo Total',
+        details: 'Detalles',
+        statusProposed: 'Propuesto',
+        statusInProgress: 'En Progreso',
+        statusCompleted: 'Completado',
+    },
+    settings: {
+        title: 'Configuración',
+        clinicInfo: 'Información de la Clínica',
+        clinicName: 'Nombre de la Clínica',
+        phone: 'Teléfono',
+        address: 'Dirección',
+        email: 'Email',
+        userProfile: 'Perfil de Usuario',
+        name: 'Nombre',
+        specialization: 'Especialización',
+        billingCurrency: 'Facturación y Moneda',
+        currency: 'Moneda',
+        save: 'Guardar Cambios',
+        saveSuccess: '¡Configuración guardada exitosamente!',
+    },
+    modals: {
+        fillAllFields: 'Por favor, complete todos los campos requeridos.',
+        addAppointmentTitle: 'Añadir Nueva Cita',
+        date: 'Fecha',
+        selectPatient: 'Seleccione un paciente',
+        duration: 'Duración (minutos)',
+        cancel: 'Cancelar',
+        save: 'Guardar',
+        addPatientTitle: 'Añadir Nuevo Paciente',
+        patientName: 'Nombre del Paciente',
+        dob: 'Fecha de Nacimiento',
+        gender: 'Género',
+        male: 'Masculino',
+        female: 'Femenino',
+        other: 'Otro',
+        phone: 'Número de Teléfono',
+        email: 'Correo Electrónico',
+        address: 'Dirección',
+        medicalHistory: 'Historial Médico',
+        notes: 'Notas',
+        avatarUrl: 'URL del Avatar',
+        createPlanTitle: 'Crear Plan de Tratamiento',
+        selectProcedure: 'Seleccione un procedimiento',
+        manualCreation: 'Creación Manual',
+        aiCreation: 'Creación con IA',
+        aiPlaceholder: 'Describa la condición del paciente o el tratamiento deseado (ej: "Paciente necesita corona en el diente #14 y tiene caries en #3 y #19. También quiere blanqueamiento.")',
+        generateWithAI: 'Generar con Gemini',
+        proceduresList: 'Procedimientos en el Plan',
+        noProcedures: 'Aún no se han añadido procedimientos.',
+        savePlan: 'Guardar Plan',
+    }
   },
-  "patientList": {
-    "title": "Pacientes",
-    "addNew": "Añadir Nuevo Paciente",
-    "searchPlaceholder": "Buscar por nombre, email o teléfono...",
-    "name": "Nombre",
-    "contact": "Contacto",
-    "dob": "Fecha de Nacimiento",
-    "actions": "Acciones"
-  },
-  "patientDetail": {
-    "headerTitle": "Detalles del Paciente",
-    "tabInfo": "Info",
-    "tabAppointments": "Citas",
-    "tabOdontogram": "Odontograma",
-    "tabBilling": "Facturación",
-    "tabFiles": "Archivos",
-    "tabAiSummary": "Resumen IA",
-    "personalDetails": "Detalles Personales",
-    "dob": "Fecha de Nacimiento:",
-    "gender": "Género:",
-    "address": "Dirección:",
-    "medicalNotes": "Notas Médicas",
-    "history": "Historial:",
-    "notes": "Notas:",
-    "billingDate": "Fecha",
-    "billingDescription": "Descripción",
-    "billingCost": "Costo",
-    "billingStatus": "Estado",
-    "paid": "Pagado",
-    "pending": "Pendiente",
-    "generateSummary": "Generar Resumen IA",
-    "generating": "Generando...",
-    "loadingSummary": "Cargando resumen...",
-    "aiSummaryTitle": "Resumen Generado por IA",
-    "clinicalFiles": "Archivos Clínicos",
-    "uploadFile": "Subir Archivo",
-    "noFiles": "No hay archivos para este paciente.",
-    "addCharge": "Añadir Cargo"
-  },
-  "treatmentPlans": {
-    "title": "Planes de Tratamiento",
-    "addNew": "Crear Nuevo Plan",
-    "patient": "Paciente",
-    "plan": "Plan",
-    "status": "Estado",
-    "totalCost": "Costo Total",
-    "details": "Detalles",
-    "statusProposed": "Propuesto",
-    "statusInProgress": "En Progreso",
-    "statusCompleted": "Completado"
-  },
-  "agenda": {
-    "title": "Agenda",
-    "today": "Hoy"
-  },
-  "settings": {
-    "title": "Configuración",
-    "description": "Gestiona la configuración de tu clínica aquí.",
-    "clinicInfo": "Información de la Clínica",
-    "clinicName": "Nombre de la Clínica",
-    "phone": "Teléfono",
-    "address": "Dirección",
-    "email": "Email",
-    "userProfile": "Perfil de Usuario",
-    "name": "Nombre",
-    "specialization": "Especialización",
-    "billingCurrency": "Facturación y Moneda",
-    "currency": "Moneda",
-    "save": "Guardar Cambios",
-    "saveSuccess": "¡Configuración guardada!"
-  },
-  "modals": {
-    "addPatientTitle": "Añadir Nuevo Paciente",
-    "addAppointmentTitle": "Añadir Nueva Cita",
-    "createPlanTitle": "Crear Plan de Tratamiento",
-    "cancel": "Cancelar",
-    "save": "Guardar",
-    "savePlan": "Guardar Plan",
-    "fillAllFields": "Por favor, rellene todos los campos obligatorios.",
-    "email": "Email",
-    "phone": "Teléfono",
-    "date": "Fecha",
-    "selectPatient": "Seleccionar un paciente",
-    "duration": "Duración (minutos)",
-    "manualCreation": "Creación Manual",
-    "aiCreation": "Asistente IA",
-    "selectProcedure": "Seleccionar procedimiento",
-    "aiPlaceholder": "Notas del paciente para la IA (ej: caries en diente #3, necesita corona en #18)...",
-    "generateWithAI": "Generar con IA",
-    "proceduresList": "Procedimientos del Plan",
-    "noProcedures": "Añada procedimientos manualmente o use la IA.",
-    "patientPhoto": "Foto del Paciente",
-    "uploadImage": "Subir Imagen",
-    "takePhoto": "Tomar Foto",
-    "capture": "Capturar"
-  }
 };
 
-// English translations
-const en = {
-  "sidebar": {
-    "title": "Dr. Magda Zavala",
-    "dashboard": "Dashboard",
-    "patients": "Patients",
-    "agenda": "Agenda",
-    "treatmentPlans": "Treatment Plans",
-    "settings": "Settings",
-    "logout": "Logout"
-  },
-  "dashboard": {
-    "title": "Dashboard",
-    "todaysAppointments": "Today's Appointments",
-    "totalPatients": "Total Patients",
-    "monthlyRevenue": "Monthly Revenue",
-    "pendingInvoices": "Pending Invoices",
-    "recentPatients": "Recent Patients",
-    "time": "Time",
-    "patient": "Patient",
-    "reason": "Reason",
-    "noAppointments": "No appointments for today.",
-    "view": "View"
-  },
-  "patientList": {
-    "title": "Patients",
-    "addNew": "Add New Patient",
-    "searchPlaceholder": "Search by name, email, or phone...",
-    "name": "Name",
-    "contact": "Contact",
-    "dob": "Date of Birth",
-    "actions": "Actions"
-  },
-  "patientDetail": {
-    "headerTitle": "Patient Details",
-    "tabInfo": "Info",
-    "tabAppointments": "Appointments",
-    "tabOdontogram": "Odontogram",
-    "tabBilling": "Billing",
-    "tabFiles": "Files",
-    "tabAiSummary": "AI Summary",
-    "personalDetails": "Personal Details",
-    "dob": "Date of Birth:",
-    "gender": "Gender:",
-    "address": "Address:",
-    "medicalNotes": "Medical Notes",
-    "history": "History:",
-    "notes": "Notes:",
-    "billingDate": "Date",
-    "billingDescription": "Description",
-    "billingCost": "Cost",
-    "billingStatus": "Status",
-    "paid": "Paid",
-    "pending": "Pending",
-    "generateSummary": "Generate AI Summary",
-    "generating": "Generating...",
-    "loadingSummary": "Loading summary...",
-    "aiSummaryTitle": "AI Generated Summary",
-    "clinicalFiles": "Clinical Files",
-    "uploadFile": "Upload File",
-    "noFiles": "There are no files for this patient.",
-    "addCharge": "Add Charge"
-  },
-  "treatmentPlans": {
-    "title": "Treatment Plans",
-    "addNew": "Create New Plan",
-    "patient": "Patient",
-    "plan": "Plan",
-    "status": "Status",
-    "totalCost": "Total Cost",
-    "details": "Details",
-    "statusProposed": "Proposed",
-    "statusInProgress": "In Progress",
-    "statusCompleted": "Completed"
-  },
-  "agenda": {
-    "title": "Agenda",
-    "today": "Today"
-  },
-  "settings": {
-    "title": "Settings",
-    "description": "Manage your clinic settings here.",
-    "clinicInfo": "Clinic Information",
-    "clinicName": "Clinic Name",
-    "phone": "Phone",
-    "address": "Address",
-    "email": "Email",
-    "userProfile": "User Profile",
-    "name": "Name",
-    "specialization": "Specialization",
-    "billingCurrency": "Billing & Currency",
-    "currency": "Currency",
-    "save": "Save Changes",
-    "saveSuccess": "Settings saved!"
-  },
-  "modals": {
-    "addPatientTitle": "Add New Patient",
-    "addAppointmentTitle": "Add New Appointment",
-    "createPlanTitle": "Create Treatment Plan",
-    "cancel": "Cancel",
-    "save": "Save",
-    "savePlan": "Save Plan",
-    "fillAllFields": "Please fill in all required fields.",
-    "email": "Email",
-    "phone": "Phone",
-    "date": "Date",
-    "selectPatient": "Select a patient",
-    "duration": "Duration (minutes)",
-    "manualCreation": "Manual Creation",
-    "aiCreation": "AI Assistant",
-    "selectProcedure": "Select procedure",
-    "aiPlaceholder": "Patient notes for AI (e.g., caries on tooth #3, needs crown on #18)...",
-    "generateWithAI": "Generate with AI",
-    "proceduresList": "Plan Procedures",
-    "noProcedures": "Add procedures manually or use the AI assistant.",
-    "patientPhoto": "Patient Photo",
-    "uploadImage": "Upload Image",
-    "takePhoto": "Take Photo",
-    "capture": "Capture"
-  }
-};
-
-
-type Language = 'es' | 'en';
-type Translations = typeof es;
+type Language = 'en' | 'es';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
-  translations: Translations;
+  t: (key: string) => string;
 }
-
-const translations: Record<Language, Translations> = { es, en };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('es');
 
-  const value = {
-    language,
-    setLanguage,
-    translations: translations[language],
-  };
+  const t = useMemo(() => (key: string): string => {
+    const keys = key.split('.');
+    let result: any = translations[language];
+    for (const k of keys) {
+      result = result?.[k];
+      if (result === undefined) {
+        console.warn(`Translation key not found: ${key}`);
+        return key;
+      }
+    }
+    return result;
+  }, [language]);
+
+  const value = { language, setLanguage, t };
 
   return (
     <LanguageContext.Provider value={value}>
@@ -283,22 +287,7 @@ export const useLanguage = () => {
   return context;
 };
 
-// Helper hook for translations
 export const useTranslation = () => {
-    const { translations } = useLanguage();
-    
-    const t = (key: string): string => {
-        const keys = key.split('.');
-        let result: any = translations;
-        for (const k of keys) {
-            result = result?.[k];
-            if (result === undefined) {
-                // Return key as fallback
-                return key;
-            }
-        }
-        return result as string;
-    };
-
-    return { t };
+  const { t } = useLanguage();
+  return { t };
 };

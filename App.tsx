@@ -1,177 +1,117 @@
-
-import React, { useState, useMemo, useEffect } from 'react';
-import { Sidebar } from './components/Sidebar';
-import { Dashboard } from './components/Dashboard';
-import { PatientList } from './components/PatientList';
-import { PatientDetail } from './components/PatientDetail';
-import { CalendarView } from './components/CalendarView';
-import { TreatmentPlans } from './components/TreatmentPlans';
-import { Settings } from './components/Settings';
-import type { Patient, Appointment, TreatmentPlan, OdontogramData } from './types';
-import { mockPatients, mockAppointments, mockTreatmentPlans } from './data/mockData';
-import { MenuIcon } from './components/icons/Icon';
-import { useTranslation } from './context/LanguageContext';
-import { ToothStatus } from './types';
+import React, { useState } from 'react';
+import { Sidebar } from './components/Sidebar.tsx';
+import { Dashboard } from './components/Dashboard.tsx';
+import { PatientList } from './components/PatientList.tsx';
+import { PatientDetail } from './components/PatientDetail.tsx';
+import { CalendarView } from './components/CalendarView.tsx';
+import { TreatmentPlans } from './components/TreatmentPlans.tsx';
+import { Settings } from './components/Settings.tsx';
+import { mockPatients, mockAppointments, mockTreatmentPlans } from './data/mockData.ts';
+import type { Patient, Appointment, OdontogramData, TreatmentPlan } from './types.ts';
+import { MenuIcon } from './components/icons/Icon.tsx';
 
 export type View = 'dashboard' | 'patients' | 'agenda' | 'treatment_plans' | 'settings';
 
-const generateInitialOdontogram = (): OdontogramData => {
-  const odontogram: OdontogramData = {};
-  for (let i = 1; i <= 32; i++) {
-    odontogram[i] = { id: i, status: ToothStatus.Healthy };
-  }
-  return odontogram;
-};
-
-const loadState = <T,>(key: string, fallback: T): T => {
-    try {
-        const stored = localStorage.getItem(key);
-        return stored ? JSON.parse(stored) : fallback;
-    } catch (error) {
-        console.error(`Error loading ${key} from localStorage`, error);
-        return fallback;
-    }
-};
-
-
 const App: React.FC = () => {
-  const [view, setView] = useState<View>('dashboard');
-  const [patients, setPatients] = useState<Patient[]>(() => loadState('dentalCrmPatients', mockPatients));
-  const [appointments, setAppointments] = useState<Appointment[]>(() => loadState('dentalCrmAppointments', mockAppointments));
-  const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>(() => loadState('dentalCrmTreatmentPlans', mockTreatmentPlans));
+  const [activeView, setActiveView] = useState<View>('dashboard');
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { t } = useTranslation();
 
-  useEffect(() => {
-    try {
-        localStorage.setItem('dentalCrmPatients', JSON.stringify(patients));
-        localStorage.setItem('dentalCrmAppointments', JSON.stringify(appointments));
-        localStorage.setItem('dentalCrmTreatmentPlans', JSON.stringify(treatmentPlans));
-    } catch (error) {
-        console.error('Error saving state to localStorage', error);
-    }
-  }, [patients, appointments, treatmentPlans]);
+  // State for data, initialized with mock data
+  const [patients, setPatients] = useState<Patient[]>(mockPatients);
+  const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
+  const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>(mockTreatmentPlans);
+
+  const selectedPatient = patients.find(p => p.id === selectedPatientId) || null;
 
   const handleSelectPatient = (id: number) => {
     setSelectedPatientId(id);
-    setView('patients'); // Switch view to patients context
-    setIsSidebarOpen(false);
+    setActiveView('patients');
   };
 
-  const handleUpdatePatient = (updatedPatient: Patient) => {
-    setPatients(prevPatients => 
-      prevPatients.map(p => p.id === updatedPatient.id ? updatedPatient : p)
-    );
+  const clearSelectedPatient = () => {
+    setSelectedPatientId(null);
   };
   
-  const handleAddNewPatient = (patientData: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files'>) => {
-      const newPatient: Patient = {
-          ...patientData,
-          id: Date.now(),
-          avatarUrl: patientData.avatarUrl || `https://picsum.photos/seed/${Date.now()}/200/200`,
-          appointments: [],
-          treatments: [],
-          files: [],
-          odontogram: generateInitialOdontogram(),
-      };
-      setPatients(prev => [newPatient, ...prev]);
+  const handleAddPatient = (patientData: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files'>) => {
+    const generateInitialOdontogram = (): OdontogramData => {
+        const odontogram: OdontogramData = {};
+        for (let i = 1; i <= 32; i++) {
+          odontogram[i] = { id: i, status: 'Healthy' };
+        }
+        return odontogram;
+    };
+
+    const newPatient: Patient = {
+      ...patientData,
+      id: Date.now(),
+      appointments: [],
+      treatments: [],
+      odontogram: generateInitialOdontogram(),
+      files: [],
+    };
+    setPatients([...patients, newPatient]);
   };
-
-  const handleAddNewAppointment = (appointmentData: Omit<Appointment, 'id' | 'patientName' | 'status'>) => {
-      const patient = patients.find(p => p.id === appointmentData.patientId);
-      if (!patient) return;
-
-      const newAppointment: Appointment = {
-          ...appointmentData,
-          id: Date.now(),
-          patientName: patient.name,
-          status: 'confirmed',
-      };
-      setAppointments(prev => [...prev, newAppointment].sort((a, b) => a.time.localeCompare(b.time)));
-      // Also add to patient's record
-      const updatedPatient = { ...patient, appointments: [...patient.appointments, newAppointment]};
-      handleUpdatePatient(updatedPatient);
-  }
+  
+  const handleUpdatePatient = (updatedPatient: Patient) => {
+    setPatients(patients.map(p => p.id === updatedPatient.id ? updatedPatient : p));
+  };
+  
+  const handleAddAppointment = (appointmentData: Omit<Appointment, 'id' | 'patientName' | 'status'>) => {
+    const patientName = patients.find(p => p.id === appointmentData.patientId)?.name || 'Unknown';
+    const newAppointment: Appointment = {
+      ...appointmentData,
+      id: Date.now(),
+      patientName,
+      status: 'confirmed',
+    };
+    setAppointments([...appointments, newAppointment].sort((a,b) => a.time.localeCompare(b.time)));
+  };
   
   const handleAddTreatmentPlan = (planData: Omit<TreatmentPlan, 'id'>) => {
-      const newPlan: TreatmentPlan = {
-          ...planData,
-          id: Date.now(),
-      };
-      setTreatmentPlans(prev => [...prev, newPlan]);
-  }
-
-  const selectedPatient = useMemo(() => {
-    return patients.find(p => p.id === selectedPatientId) || null;
-  }, [selectedPatientId, patients]);
+    const newPlan: TreatmentPlan = {
+      ...planData,
+      id: Date.now(),
+    };
+    setTreatmentPlans([...treatmentPlans, newPlan]);
+  };
 
   const renderContent = () => {
-    if (selectedPatientId !== null && selectedPatient) {
-        return <PatientDetail patient={selectedPatient} onBack={() => setSelectedPatientId(null)} onUpdatePatient={handleUpdatePatient} />;
+    if (activeView === 'patients' && selectedPatient) {
+      return <PatientDetail patient={selectedPatient} onBack={() => setSelectedPatientId(null)} onUpdatePatient={handleUpdatePatient} />;
     }
-
-    switch (view) {
+    switch (activeView) {
       case 'dashboard':
-        return <Dashboard appointments={appointments} patients={patients} onSelectPatient={handleSelectPatient} />;
+        return <Dashboard patients={patients} appointments={appointments} onSelectPatient={handleSelectPatient} />;
       case 'patients':
-        return <PatientList patients={patients} onSelectPatient={handleSelectPatient} onAddPatient={handleAddNewPatient} />;
+        return <PatientList patients={patients} onSelectPatient={handleSelectPatient} onAddPatient={handleAddPatient} />;
       case 'agenda':
-        return <CalendarView appointments={appointments} patients={patients} onAddAppointment={handleAddNewAppointment} />;
+        return <CalendarView appointments={appointments} patients={patients} onAddAppointment={handleAddAppointment} />;
       case 'treatment_plans':
         return <TreatmentPlans plans={treatmentPlans} patients={patients} onAddPlan={handleAddTreatmentPlan} />;
       case 'settings':
-          return <Settings />;
+        return <Settings />;
       default:
-        return <Dashboard appointments={appointments} patients={patients} onSelectPatient={handleSelectPatient} />;
+        return <Dashboard patients={patients} appointments={appointments} onSelectPatient={handleSelectPatient} />;
     }
   };
-  
-  const getHeaderTitle = () => {
-    if (selectedPatientId !== null) return t('patientDetail.headerTitle');
-    
-    const viewTitleMap: { [key in View]: string } = {
-        'dashboard': 'dashboard.title',
-        'patients': 'patientList.title',
-        'agenda': 'agenda.title',
-        'treatment_plans': 'treatmentPlans.title',
-        'settings': 'settings.title'
-    };
-    
-    return t(viewTitleMap[view] || view);
-  }
 
   return (
-    <div className="relative min-h-screen md:flex">
-      {/* Overlay for mobile */}
-      {isSidebarOpen && (
-          <div 
-              className="fixed inset-0 bg-black opacity-50 z-20 md:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-          ></div>
-      )}
-
+    <div className="flex h-screen bg-background text-text-primary font-sans">
       <Sidebar 
-        activeView={view} 
-        setView={setView} 
-        clearSelectedPatient={() => setSelectedPatientId(null)}
+        activeView={activeView} 
+        setView={setActiveView} 
+        clearSelectedPatient={clearSelectedPatient}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />
-      
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Header */}
-        <header className="md:hidden bg-brand-dark shadow-md p-4 flex items-center sticky top-0 z-10">
-            <button onClick={() => setIsSidebarOpen(true)} className="text-white hover:text-brand-light">
-                <MenuIcon />
-            </button>
-            <h1 className="text-xl font-bold ml-4 text-white capitalize">{getHeaderTitle()}</h1>
-        </header>
-
-        <main className="flex-1 overflow-y-auto">
-          {renderContent()}
-        </main>
-      </div>
+       {isSidebarOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
+      <main className="flex-1 overflow-y-auto relative">
+        <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-2 m-4 rounded-md bg-white shadow fixed top-0 left-0 z-10">
+            <MenuIcon />
+        </button>
+        {renderContent()}
+      </main>
     </div>
   );
 };

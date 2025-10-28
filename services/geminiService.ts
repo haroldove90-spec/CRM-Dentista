@@ -1,6 +1,6 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
-import type { TreatmentPlanProcedure } from '../types';
+// FIX: Add .ts extension to file import.
+import type { TreatmentPlanProcedure } from '../types.ts';
 
 export const generatePatientSummary = async (notes: string): Promise<string> => {
   // Assume process.env.API_KEY is configured in the environment
