@@ -1,5 +1,4 @@
-
-import type { Patient, Appointment, OdontogramData } from '../types';
+import type { Patient, Appointment, OdontogramData, TreatmentPlan } from '../types';
 import { ToothStatus } from '../types';
 
 const generateInitialOdontogram = (): OdontogramData => {
@@ -90,4 +89,45 @@ export const mockPatients: Patient[] = [
     ],
     odontogram: odontogram3,
   },
+];
+
+export const mockTreatmentPlans: TreatmentPlan[] = [
+    {
+        id: 1,
+        patientId: 1,
+        patientName: 'Ana García',
+        planName: 'Restauración Completa',
+        status: 'In Progress',
+        totalCost: 1570,
+        procedures: [
+            { id: 1, description: 'Composite Filling - Tooth #3', cost: 150, status: 'pending' },
+            { id: 2, description: 'Porcelain Crown - Tooth #18', cost: 800, status: 'completed' },
+            { id: 3, description: 'Limpieza Profunda', cost: 200, status: 'completed' },
+            { id: 4, description: 'Blanqueamiento Dental', cost: 420, status: 'pending' },
+        ],
+    },
+    {
+        id: 2,
+        patientId: 2,
+        patientName: 'Carlos Martinez',
+        planName: 'Implante y Canal Radicular',
+        status: 'Proposed',
+        totalCost: 3600,
+        procedures: [
+            { id: 1, description: 'Root Canal - Tooth #12', cost: 1100, status: 'pending' },
+            { id: 2, description: 'Dental Implant - Tooth #5', cost: 2500, status: 'completed' },
+        ],
+    },
+    {
+        id: 3,
+        patientId: 3,
+        patientName: 'Sofia Rodriguez',
+        planName: 'Plan Cosmético',
+        status: 'Completed',
+        totalCost: 2800,
+        procedures: [
+            { id: 1, description: 'Teeth Whitening', cost: 500, status: 'completed' },
+            { id: 2, description: 'Dental Implant - Tooth #19', cost: 2300, status: 'completed' },
+        ],
+    },
 ];

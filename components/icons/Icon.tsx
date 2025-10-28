@@ -29,6 +29,12 @@ export const SettingsIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => 
   </svg>
 );
 
+export const TreatmentPlanIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+    </svg>
+);
+
 export const ToothIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
         <path d="M16.5,8C16.5,7.17,16.17,6.5,15.5,6.5H14.5V5.5C14.5,4.67,14.17,4,13.5,4H10.5C9.83,4,9.5,4.67,9.5,5.5V6.5H8.5C7.83,6.5,7.5,7.17,7.5,8C7.5,8.83,7.83,9.5,8.5,9.5H9.5V10.5C9.5,12.43,10.05,13.6,11.25,14.39C10.7,15.21,10.27,16.1,10.09,17H9.5C8.67,17,8,17.67,8,18.5V20H16V18.5C16,17.67,15.33,17,14.5,17H13.91C13.73,16.1,13.3,15.21,12.75,14.39C13.95,13.6,14.5,12.43,14.5,10.5V9.5H15.5C16.17,9.5,16.5,8.83,16.5,8Z" />

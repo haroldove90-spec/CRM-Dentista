@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Appointment } from '../types';
+import { useLanguage, useTranslation } from '../context/LanguageContext';
 
 interface CalendarViewProps {
   appointments: Appointment[];
@@ -8,13 +9,19 @@ interface CalendarViewProps {
 const hours = Array.from({ length: 12 }, (_, i) => `${i + 8}:00`); // 8 AM to 7 PM
 
 export const CalendarView: React.FC<CalendarViewProps> = ({ appointments }) => {
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   const today = new Date();
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  
   const weekDates = Array.from({ length: 7 }, (_, i) => {
     const date = new Date(today);
     date.setDate(today.getDate() - today.getDay() + i);
     return date;
   });
+
+  const daysOfWeek = weekDates.map(date => 
+    new Intl.DateTimeFormat(language, { weekday: 'short' }).format(date)
+  );
 
   const getAppointmentsForDay = (date: Date) => {
     const dateString = date.toISOString().split('T')[0];
@@ -23,7 +30,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ appointments }) => {
 
   return (
     <div className="p-4 md:p-8 bg-background min-h-full">
-      <h1 className="text-3xl font-bold text-text-primary mb-6">Calendar</h1>
+      <h1 className="text-3xl font-bold text-text-primary mb-6">{t('calendar.title')}</h1>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="overflow-x-auto">
@@ -41,8 +48,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ appointments }) => {
               {/* Day columns */}
               {weekDates.map((date, index) => (
                 <div key={index} className={`col-span-1 ${index < 6 ? 'border-r border-gray-200' : ''}`}>
-                  <div className="h-16 flex flex-col items-center justify-center border-b border-gray-200">
-                    <span className="font-semibold">{daysOfWeek[date.getDay()]}</span>
+                  <div className="h-16 flex flex-col items-center justify-center border-b border-gray-200 capitalize">
+                    <span className="font-semibold">{daysOfWeek[index]}</span>
                     <span className={`text-xl font-bold ${date.toDateString() === today.toDateString() ? 'text-brand-primary' : ''}`}>
                       {date.getDate()}
                     </span>

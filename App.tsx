@@ -4,17 +4,20 @@ import { Dashboard } from './components/Dashboard';
 import { PatientList } from './components/PatientList';
 import { PatientDetail } from './components/PatientDetail';
 import { CalendarView } from './components/CalendarView';
+import { TreatmentPlans } from './components/TreatmentPlans';
 import type { Patient } from './types';
-import { mockPatients, mockAppointments } from './data/mockData';
+import { mockPatients, mockAppointments, mockTreatmentPlans } from './data/mockData';
 import { MenuIcon } from './components/icons/Icon';
+import { useTranslation } from './context/LanguageContext';
 
-export type View = 'dashboard' | 'patients' | 'calendar' | 'settings';
+export type View = 'dashboard' | 'patients' | 'calendar' | 'treatment_plans' | 'settings';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('dashboard');
   const [patients, setPatients] = useState<Patient[]>(mockPatients);
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleSelectPatient = (id: number) => {
     setSelectedPatientId(id);
@@ -43,16 +46,27 @@ const App: React.FC = () => {
         return <PatientList patients={patients} onSelectPatient={handleSelectPatient} />;
       case 'calendar':
         return <CalendarView appointments={mockAppointments} />;
+      case 'treatment_plans':
+        return <TreatmentPlans plans={mockTreatmentPlans} />;
       case 'settings':
-          return <div className="p-4 md:p-8"><h1 className="text-3xl font-bold">Settings</h1><p className="mt-4 text-text-secondary">Manage your clinic settings here. This feature is under construction.</p></div>
+          return <div className="p-4 md:p-8"><h1 className="text-3xl font-bold">{t('settings.title')}</h1><p className="mt-4 text-text-secondary">{t('settings.description')}</p></div>
       default:
         return <Dashboard appointments={mockAppointments} patients={patients} onSelectPatient={handleSelectPatient} />;
     }
   };
   
   const getHeaderTitle = () => {
-      if (selectedPatientId !== null) return 'Patient Details';
-      return view.charAt(0).toUpperCase() + view.slice(1);
+    if (selectedPatientId !== null) return t('patientDetail.headerTitle');
+    
+    const viewTitleMap: { [key in View]: string } = {
+        'dashboard': 'dashboard.title',
+        'patients': 'patientList.title',
+        'calendar': 'calendar.title',
+        'treatment_plans': 'treatmentPlans.title',
+        'settings': 'settings.title'
+    };
+    
+    return t(viewTitleMap[view] || view);
   }
 
   return (

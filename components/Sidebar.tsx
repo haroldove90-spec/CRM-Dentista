@@ -1,6 +1,7 @@
 import React from 'react';
 import type { View } from '../App';
-import { DashboardIcon, PatientsIcon, CalendarIcon, SettingsIcon, ToothIcon, LogoutIcon, CloseIcon } from './icons/Icon';
+import { DashboardIcon, PatientsIcon, CalendarIcon, SettingsIcon, ToothIcon, LogoutIcon, CloseIcon, TreatmentPlanIcon } from './icons/Icon';
+import { useLanguage, useTranslation } from '../context/LanguageContext';
 
 interface SidebarProps {
   activeView: View;
@@ -36,6 +37,9 @@ const NavItem: React.FC<{
 );
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, clearSelectedPatient, isSidebarOpen, setIsSidebarOpen }) => {
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
+
   const handleSetView = (view: View) => {
     clearSelectedPatient();
     setView(view);
@@ -47,7 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, clearSele
       <div className="flex items-center justify-between mb-8 px-2">
         <div className="flex items-center">
             <ToothIcon className="w-10 h-10 text-brand-secondary" />
-            <h1 className="text-2xl font-bold ml-2">CRM Dentista</h1>
+            <h1 className="text-2xl font-bold ml-2">{t('sidebar.title')}</h1>
         </div>
         <button onClick={() => setIsSidebarOpen(false)} className="md:hidden p-1 text-gray-300 hover:text-white">
             <CloseIcon />
@@ -55,14 +59,33 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, clearSele
       </div>
       <nav className="flex-1">
         <ul>
-          <NavItem icon={<DashboardIcon />} label="Dashboard" isActive={activeView === 'dashboard'} onClick={() => handleSetView('dashboard')} />
-          <NavItem icon={<PatientsIcon />} label="Patients" isActive={activeView === 'patients'} onClick={() => handleSetView('patients')} />
-          <NavItem icon={<CalendarIcon />} label="Calendar" isActive={activeView === 'calendar'} onClick={() => handleSetView('calendar')} />
-          <NavItem icon={<SettingsIcon />} label="Settings" isActive={activeView === 'settings'} onClick={() => handleSetView('settings')} />
+          <NavItem icon={<DashboardIcon />} label={t('sidebar.dashboard')} isActive={activeView === 'dashboard'} onClick={() => handleSetView('dashboard')} />
+          <NavItem icon={<PatientsIcon />} label={t('sidebar.patients')} isActive={activeView === 'patients'} onClick={() => handleSetView('patients')} />
+          <NavItem icon={<CalendarIcon />} label={t('sidebar.calendar')} isActive={activeView === 'calendar'} onClick={() => handleSetView('calendar')} />
+          <NavItem icon={<TreatmentPlanIcon />} label={t('sidebar.treatmentPlans')} isActive={activeView === 'treatment_plans'} onClick={() => handleSetView('treatment_plans')} />
+          <NavItem icon={<SettingsIcon />} label={t('sidebar.settings')} isActive={activeView === 'settings'} onClick={() => handleSetView('settings')} />
         </ul>
       </nav>
+      
+      <div className="mb-4">
+        <div className="flex justify-center items-center p-1 bg-gray-900/20 rounded-lg">
+            <button
+                onClick={() => setLanguage('es')}
+                className={`w-full px-3 py-1 text-sm font-bold rounded-md transition-colors ${language === 'es' ? 'bg-brand-primary text-white' : 'text-gray-300 hover:text-white'}`}
+            >
+                ES
+            </button>
+            <button
+                onClick={() => setLanguage('en')}
+                className={`w-full px-3 py-1 text-sm font-bold rounded-md transition-colors ${language === 'en' ? 'bg-brand-primary text-white' : 'text-gray-300 hover:text-white'}`}
+            >
+                EN
+            </button>
+        </div>
+      </div>
+
       <div>
-         <NavItem icon={<LogoutIcon />} label="Logout" isActive={false} onClick={() => { setIsSidebarOpen(false); /* Implement logout */ }} />
+         <NavItem icon={<LogoutIcon />} label={t('sidebar.logout')} isActive={false} onClick={() => { setIsSidebarOpen(false); /* Implement logout */ }} />
       </div>
     </aside>
   );

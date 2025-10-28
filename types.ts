@@ -52,3 +52,20 @@ export interface Patient {
   treatments: Treatment[];
   odontogram: OdontogramData;
 }
+
+export interface TreatmentPlanProcedure {
+    id: number;
+    description: string;
+    cost: number;
+    status: 'pending' | 'completed';
+}
+
+export interface TreatmentPlan {
+    id: number;
+    patientId: number;
+    patientName: string;
+    planName: string;
+    status: 'Proposed' | 'In Progress' | 'Completed';
+    totalCost: number;
+    procedures: TreatmentPlanProcedure[];
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Patient } from '../types';
+import { useTranslation } from '../context/LanguageContext';
 
 interface PatientListProps {
   patients: Patient[];
@@ -8,6 +9,7 @@ interface PatientListProps {
 
 export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPatient }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { t } = useTranslation();
 
   const filteredPatients = patients.filter(patient =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -18,16 +20,16 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
   return (
     <div className="p-4 md:p-8 bg-background min-h-full">
       <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
-        <h1 className="text-3xl font-bold text-text-primary">Patients</h1>
+        <h1 className="text-3xl font-bold text-text-primary">{t('patientList.title')}</h1>
         <button className="bg-brand-primary text-white px-4 py-2 rounded-lg shadow hover:bg-brand-dark transition-colors w-full md:w-auto">
-          Add New Patient
+          {t('patientList.addNew')}
         </button>
       </div>
 
       <div className="mb-6">
         <input
           type="text"
-          placeholder="Search by name, email, or phone..."
+          placeholder={t('patientList.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
@@ -39,10 +41,10 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
           <table className="w-full text-left">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="p-4 font-semibold">Name</th>
-                <th className="p-4 font-semibold hidden md:table-cell">Contact</th>
-                <th className="p-4 font-semibold hidden lg:table-cell">Date of Birth</th>
-                <th className="p-4 font-semibold">Actions</th>
+                <th className="p-4 font-semibold">{t('patientList.name')}</th>
+                <th className="p-4 font-semibold hidden md:table-cell">{t('patientList.contact')}</th>
+                <th className="p-4 font-semibold hidden lg:table-cell">{t('patientList.dob')}</th>
+                <th className="p-4 font-semibold">{t('patientList.actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -69,7 +71,7 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
                       onClick={() => onSelectPatient(patient.id)}
                       className="bg-brand-light text-brand-dark px-3 py-1 rounded-md hover:bg-brand-secondary hover:text-white transition-colors"
                     >
-                      View
+                      {t('dashboard.view')}
                     </button>
                   </td>
                 </tr>
