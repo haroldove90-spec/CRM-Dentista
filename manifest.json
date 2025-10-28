@@ -1,0 +1,27 @@
+{
+  "short_name": "Dra. Zavala",
+  "name": "Dra. Magda Zavala",
+  "description": "A comprehensive CRM for dental clinics to manage patients, appointments, billing, and clinical records. Features an interactive odontogram and AI-powered patient summaries.",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#00A79D",
+  "background_color": "#F9FAFB"
+}
