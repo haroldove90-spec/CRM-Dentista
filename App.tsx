@@ -81,6 +81,10 @@ const App: React.FC = () => {
     };
     setTreatmentPlans([...treatmentPlans, newPlan]);
   };
+  
+  const handleUpdateTreatmentPlan = (updatedPlan: TreatmentPlan) => {
+    setTreatmentPlans(treatmentPlans.map(p => p.id === updatedPlan.id ? updatedPlan : p));
+  };
 
   const getActiveViewTitle = () => {
     if (activeView === 'patients' && selectedPatient) {
@@ -108,7 +112,7 @@ const App: React.FC = () => {
       case 'agenda':
         return <CalendarView appointments={appointments} patients={patients} onAddAppointment={handleAddAppointment} />;
       case 'treatment_plans':
-        return <TreatmentPlans plans={treatmentPlans} patients={patients} onAddPlan={handleAddTreatmentPlan} />;
+        return <TreatmentPlans plans={treatmentPlans} patients={patients} onAddPlan={handleAddTreatmentPlan} onUpdatePlan={handleUpdateTreatmentPlan} />;
       case 'settings':
         return <Settings />;
       default:

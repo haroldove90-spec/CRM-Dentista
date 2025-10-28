@@ -120,6 +120,9 @@ const translations = {
         proceduresList: 'Procedures in Plan',
         noProcedures: 'No procedures added yet.',
         savePlan: 'Save Plan',
+        treatmentPlanDetailTitle: 'Treatment Plan Details',
+        statusLabel: 'Status',
+        procedures: 'Procedures',
     }
   },
   es: {
@@ -240,6 +243,9 @@ const translations = {
         proceduresList: 'Procedimientos en el Plan',
         noProcedures: 'Aún no se han añadido procedimientos.',
         savePlan: 'Guardar Plan',
+        treatmentPlanDetailTitle: 'Detalles del Plan de Tratamiento',
+        statusLabel: 'Estado',
+        procedures: 'Procedimientos',
     }
   },
 };

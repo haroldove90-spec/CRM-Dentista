@@ -80,7 +80,7 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
                         <CameraIcon className="w-5 h-5" />
                     </button>
                 </div>
-                <div className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4">
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 w-full">
                     <div className="col-span-full md:col-span-1">
                         <p className="text-sm font-medium text-text-secondary">{t('patientList.name')}</p>
                         <p className="text-xl font-bold text-text-primary">{patient.name}</p>
@@ -97,8 +97,8 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
 
             {/* Tabs */}
             <div className="bg-white rounded-lg shadow-md">
-                 <div className="border-b">
-                    <nav className="flex space-x-4 px-6">
+                 <div className="border-b overflow-x-auto">
+                    <nav className="flex space-x-2 sm:space-x-4 px-2 sm:px-6 whitespace-nowrap">
                         <TabButton label={t('patientDetail.overview')} isActive={activeTab === 'overview'} onClick={() => setActiveTab('overview')} />
                         <TabButton label={t('patientDetail.odontogram')} isActive={activeTab === 'odontogram'} onClick={() => setActiveTab('odontogram')} />
                         <TabButton label={t('patientDetail.treatments')} isActive={activeTab === 'treatments'} onClick={() => setActiveTab('treatments')} />
