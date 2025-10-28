@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import type { Patient, TreatmentPlan, TreatmentPlanProcedure } from '../types';
 import { useTranslation } from '../context/LanguageContext';
@@ -79,14 +78,14 @@ export const CreateTreatmentPlanModal: React.FC<CreateTreatmentPlanModalProps> =
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="patient" className="block text-sm font-medium text-text-secondary mb-1">{t('dashboard.patient')}</label>
-              <select id="patient" value={patientId} onChange={(e) => setPatientId(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg">
+              <select id="patient" value={patientId} onChange={(e) => setPatientId(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black">
                 <option value="">{t('modals.selectPatient')}</option>
                 {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
               </select>
             </div>
             <div>
               <label htmlFor="planName" className="block text-sm font-medium text-text-secondary mb-1">{t('treatmentPlans.plan')}</label>
-              <input type="text" id="planName" value={planName} onChange={(e) => setPlanName(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg" />
+              <input type="text" id="planName" value={planName} onChange={(e) => setPlanName(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
             </div>
           </div>
 
@@ -95,7 +94,7 @@ export const CreateTreatmentPlanModal: React.FC<CreateTreatmentPlanModalProps> =
             <div className="space-y-3">
                 <h3 className="font-semibold text-lg border-b pb-2">{t('modals.manualCreation')}</h3>
                 <div className="flex gap-2">
-                    <select value={selectedProcedure} onChange={(e) => setSelectedProcedure(e.target.value)} className="flex-grow p-2 border border-gray-300 rounded-lg">
+                    <select value={selectedProcedure} onChange={(e) => setSelectedProcedure(e.target.value)} className="flex-grow p-2 border border-gray-300 rounded-lg bg-gray-100 text-black">
                         <option value="">{t('modals.selectProcedure')}</option>
                         {commonProcedures.map(p => <option key={p.name} value={p.name}>{p.name} - ${p.defaultCost}</option>)}
                     </select>
@@ -105,7 +104,7 @@ export const CreateTreatmentPlanModal: React.FC<CreateTreatmentPlanModalProps> =
             {/* AI Creation */}
             <div className="space-y-3">
                 <h3 className="font-semibold text-lg border-b pb-2">{t('modals.aiCreation')}</h3>
-                <textarea placeholder={t('modals.aiPlaceholder')} value={aiPrompt} onChange={(e) => setAiPrompt(e.target.value)} rows={2} className="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+                <textarea placeholder={t('modals.aiPlaceholder')} value={aiPrompt} onChange={(e) => setAiPrompt(e.target.value)} rows={2} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"></textarea>
                 <button onClick={handleGenerateWithAI} disabled={isGenerating} className="w-full px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-dark disabled:bg-gray-400">
                     {isGenerating ? t('patientDetail.generating') : t('modals.generateWithAI')}
                 </button>

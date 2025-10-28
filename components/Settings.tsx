@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from '../context/LanguageContext';
 
@@ -40,19 +39,19 @@ export const Settings: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="clinicName" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.clinicName')}</label>
-              <input type="text" id="clinicName" name="name" value={clinicInfo.name} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="text" id="clinicName" name="name" value={clinicInfo.name} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
             <div>
               <label htmlFor="clinicPhone" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.phone')}</label>
-              <input type="tel" id="clinicPhone" name="phone" value={clinicInfo.phone} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="tel" id="clinicPhone" name="phone" value={clinicInfo.phone} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
             <div className="md:col-span-2">
               <label htmlFor="clinicAddress" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.address')}</label>
-              <input type="text" id="clinicAddress" name="address" value={clinicInfo.address} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="text" id="clinicAddress" name="address" value={clinicInfo.address} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
             <div className="md:col-span-2">
               <label htmlFor="clinicEmail" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.email')}</label>
-              <input type="email" id="clinicEmail" name="email" value={clinicInfo.email} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="email" id="clinicEmail" name="email" value={clinicInfo.email} onChange={handleClinicChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
           </div>
         </div>
@@ -63,11 +62,11 @@ export const Settings: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="userName" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.name')}</label>
-              <input type="text" id="userName" name="name" value={userInfo.name} onChange={handleUserChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="text" id="userName" name="name" value={userInfo.name} onChange={handleUserChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
             <div>
               <label htmlFor="specialization" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.specialization')}</label>
-              <input type="text" id="specialization" name="specialization" value={userInfo.specialization} onChange={handleUserChange} className="w-full p-2 border border-gray-300 rounded-lg"/>
+              <input type="text" id="specialization" name="specialization" value={userInfo.specialization} onChange={handleUserChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"/>
             </div>
           </div>
         </div>
@@ -77,7 +76,7 @@ export const Settings: React.FC = () => {
           <h2 className="text-xl font-semibold mb-4 border-b pb-2">{t('settings.billingCurrency')}</h2>
           <div>
             <label htmlFor="currency" className="block text-sm font-medium text-text-secondary mb-1">{t('settings.currency')}</label>
-            <select id="currency" value={currency} onChange={(e) => setCurrency(e.target.value)} className="w-full md:w-1/2 p-2 border border-gray-300 rounded-lg">
+            <select id="currency" value={currency} onChange={(e) => setCurrency(e.target.value)} className="w-full md:w-1/2 p-2 border border-gray-300 rounded-lg bg-gray-100 text-black">
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
                 <option value="MXN">MXN ($)</option>

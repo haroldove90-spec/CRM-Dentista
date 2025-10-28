@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import type { Patient } from '../types';
 import { useTranslation } from '../context/LanguageContext';
@@ -55,23 +54,23 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClos
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-1">{t('patientList.name')}</label>
-                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full p-2 border border-gray-300 rounded-lg" />
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
                 </div>
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-1">{t('modals.email')}</label>
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full p-2 border border-gray-300 rounded-lg" />
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
                 </div>
                 <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-text-secondary mb-1">{t('modals.phone')}</label>
-                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg" />
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
                 </div>
                 <div>
                     <label htmlFor="dob" className="block text-sm font-medium text-text-secondary mb-1">{t('patientList.dob')}</label>
-                    <input type="date" id="dob" name="dob" value={formData.dob} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg" />
+                    <input type="date" id="dob" name="dob" value={formData.dob} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
                 </div>
                  <div>
                     <label htmlFor="gender" className="block text-sm font-medium text-text-secondary mb-1">{t('patientDetail.gender')}</label>
-                    <select id="gender" name="gender" value={formData.gender} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg">
+                    <select id="gender" name="gender" value={formData.gender} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black">
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                         <option value="Other">Other</option>
@@ -79,16 +78,16 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClos
                 </div>
                 <div>
                     <label htmlFor="address" className="block text-sm font-medium text-text-secondary mb-1">{t('patientDetail.address')}</label>
-                    <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg" />
+                    <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
                 </div>
             </div>
             <div>
                 <label htmlFor="medicalHistory" className="block text-sm font-medium text-text-secondary mb-1">{t('patientDetail.history')}</label>
-                <textarea id="medicalHistory" name="medicalHistory" value={formData.medicalHistory} onChange={handleChange} rows={3} className="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+                <textarea id="medicalHistory" name="medicalHistory" value={formData.medicalHistory} onChange={handleChange} rows={3} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"></textarea>
             </div>
             <div>
                 <label htmlFor="notes" className="block text-sm font-medium text-text-secondary mb-1">{t('patientDetail.notes')}</label>
-                <textarea id="notes" name="notes" value={formData.notes} onChange={handleChange} rows={3} className="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+                <textarea id="notes" name="notes" value={formData.notes} onChange={handleChange} rows={3} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"></textarea>
             </div>
         </form>
          <div className="flex justify-end p-4 border-t mt-auto">

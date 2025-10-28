@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import type { Patient, OdontogramData, Treatment, ClinicalFile } from '../types';
 import { Odontogram } from './Odontogram';
@@ -34,7 +33,7 @@ const PatientHeader: React.FC<{ patient: Patient; onBack: () => void }> = ({ pat
             <button onClick={onBack} className="mr-4 p-2 rounded-full hover:bg-gray-200 transition-colors">
                 <BackArrowIcon className="w-6 h-6 text-text-secondary"/>
             </button>
-            <img src={patient.avatarUrl} alt={patient.name} className="w-16 h-16 md:w-20 md:h-20 rounded-full mr-4 border-4 border-brand-light"/>
+            <img src={patient.avatarUrl} alt={patient.name} className="w-16 h-16 md:w-20 md:h-20 rounded-full mr-4 border-4 border-brand-light object-cover"/>
             <div className="overflow-hidden">
                 <h1 className="text-xl md:text-3xl font-bold truncate">{patient.name}</h1>
                 <p className="text-text-secondary text-sm truncate">{patient.email}</p>
@@ -102,8 +101,8 @@ const PatientBilling: React.FC<{ patient: Patient; onUpdatePatient: (patient: Pa
 
             {showAddCharge && (
                 <div className="flex gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
-                    <input type="text" placeholder={t('patientDetail.billingDescription')} value={newCharge.description} onChange={e => setNewCharge({...newCharge, description: e.target.value})} className="flex-grow p-2 border rounded-md"/>
-                    <input type="number" placeholder={t('patientDetail.billingCost')} value={newCharge.cost} onChange={e => setNewCharge({...newCharge, cost: e.target.value})} className="w-24 p-2 border rounded-md"/>
+                    <input type="text" placeholder={t('patientDetail.billingDescription')} value={newCharge.description} onChange={e => setNewCharge({...newCharge, description: e.target.value})} className="flex-grow p-2 border rounded-md bg-gray-100 text-black"/>
+                    <input type="number" placeholder={t('patientDetail.billingCost')} value={newCharge.cost} onChange={e => setNewCharge({...newCharge, cost: e.target.value})} className="w-24 p-2 border rounded-md bg-gray-100 text-black"/>
                     <button onClick={handleAddCharge} className="bg-green-500 text-white px-3 rounded-md hover:bg-green-600 font-bold">+</button>
                 </div>
             )}

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import type { Patient, Appointment } from '../types';
 import { useTranslation } from '../context/LanguageContext';
@@ -56,22 +55,22 @@ export const AddAppointmentModal: React.FC<AddAppointmentModalProps> = ({ isOpen
           </div>
           <div>
             <label htmlFor="patient" className="block text-sm font-medium text-text-secondary mb-1">{t('dashboard.patient')}</label>
-            <select id="patient" value={patientId} onChange={(e) => setPatientId(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg">
+            <select id="patient" value={patientId} onChange={(e) => setPatientId(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black">
               <option value="">{t('modals.selectPatient')}</option>
               {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
           </div>
            <div>
             <label htmlFor="time" className="block text-sm font-medium text-text-secondary mb-1">{t('dashboard.time')}</label>
-            <input id="time" type="time" value={time} onChange={(e) => setTime(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg" />
+            <input id="time" type="time" value={time} onChange={(e) => setTime(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
           </div>
           <div>
             <label htmlFor="duration" className="block text-sm font-medium text-text-secondary mb-1">{t('modals.duration')}</label>
-            <input id="duration" type="number" value={duration} onChange={(e) => setDuration(parseInt(e.target.value, 10))} required min="15" step="15" className="w-full p-2 border border-gray-300 rounded-lg" />
+            <input id="duration" type="number" value={duration} onChange={(e) => setDuration(parseInt(e.target.value, 10))} required min="15" step="15" className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black" />
           </div>
           <div>
             <label htmlFor="reason" className="block text-sm font-medium text-text-secondary mb-1">{t('dashboard.reason')}</label>
-            <textarea id="reason" value={reason} onChange={(e) => setReason(e.target.value)} required rows={3} className="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+            <textarea id="reason" value={reason} onChange={(e) => setReason(e.target.value)} required rows={3} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-black"></textarea>
           </div>
         </form>
          <div className="flex justify-end p-4 border-t mt-auto">

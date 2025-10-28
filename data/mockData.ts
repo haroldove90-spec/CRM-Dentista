@@ -1,4 +1,3 @@
-
 import type { Patient, Appointment, OdontogramData, TreatmentPlan, ClinicalFile } from '../types';
 import { ToothStatus } from '../types';
 
@@ -46,7 +45,7 @@ export const mockPatients: Patient[] = [
     address: 'Calle Falsa 123, Madrid',
     medicalHistory: 'Allergic to penicillin. No other known conditions.',
     notes: 'Patient is nervous about dental procedures. Requires extra reassurance. Came in for a checkup, found caries on tooth #3. Scheduled a filling. Also completed a crown on #18 last year. Tooth #30 was extracted two years ago due to severe decay.',
-    avatarUrl: 'https://picsum.photos/id/1027/200/200',
+    avatarUrl: 'https://i.pinimg.com/1200x/9a/37/7c/9a377c47a7951de1944b3f7445a959e9.jpg',
     appointments: mockAppointments.filter(a => a.patientId === 1),
     treatments: [
       { id: 1, date: '2023-10-15', description: 'Composite Filling - Tooth #14', cost: 120, paid: true, toothIds: [14] },
@@ -69,7 +68,7 @@ export const mockPatients: Patient[] = [
     address: 'Avenida Siempre Viva 742, Barcelona',
     medicalHistory: 'No known allergies. Takes medication for high blood pressure.',
     notes: 'Patient complains of sensitivity in the upper left quadrant. X-ray confirms need for root canal on tooth #12. Patient has an implant on #5 from a previous clinic.',
-    avatarUrl: 'https://picsum.photos/id/1005/200/200',
+    avatarUrl: 'https://www.infobae.com/resizer/v2/DLH6FYJ75ONQBW4WHCF5AI7LYQ.aspx?auth=c863f5b7a2a9d93c66b2cab16b9440dc97cff8b9b5fa79a3cfed59e3cce8fc09&smart=true&width=992&height=658&quality=85',
     appointments: mockAppointments.filter(a => a.patientId === 2),
     treatments: [
       { id: 4, date: '2023-08-05', description: 'Dental Implant - Tooth #5', cost: 2500, paid: true, toothIds: [5] },
@@ -88,7 +87,7 @@ export const mockPatients: Patient[] = [
     address: 'Plaza Mayor 1, Sevilla',
     medicalHistory: 'None.',
     notes: 'Patient is interested in cosmetic dentistry, specifically teeth whitening. All wisdom teeth were extracted before she became a patient at this clinic. Patient has an implant on #19.',
-    avatarUrl: 'https://picsum.photos/id/1011/200/200',
+    avatarUrl: 'https://i.pinimg.com/736x/be/20/cc/be20ccc1456eb061abbf5a77d84fb8b7.jpg',
     appointments: mockAppointments.filter(a => a.patientId === 3),
     treatments: [
         { id: 6, date: '2023-09-12', description: 'Dental Implant - Tooth #19', cost: 2300, paid: true, toothIds: [19] }

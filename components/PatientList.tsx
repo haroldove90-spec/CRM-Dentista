@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import type { Patient } from '../types';
 import { useTranslation } from '../context/LanguageContext';
@@ -41,7 +40,7 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
             placeholder={t('patientList.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary bg-gray-100 text-black"
           />
         </div>
 
@@ -61,7 +60,7 @@ export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPati
                   <tr key={patient.id} className="border-b hover:bg-gray-50">
                     <td className="p-4">
                       <div className="flex items-center">
-                        <img src={patient.avatarUrl} alt={patient.name} className="w-10 h-10 rounded-full mr-4" />
+                        <img src={patient.avatarUrl} alt={patient.name} className="w-10 h-10 rounded-full mr-4 object-cover" />
                         <div>
                           <p className="font-medium">{patient.name}</p>
                           <p className="text-sm text-text-secondary md:hidden">{patient.phone}</p>
