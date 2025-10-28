@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import type { Patient, OdontogramData } from '../types';
 import { Odontogram } from './Odontogram';
@@ -16,7 +15,7 @@ type Tab = 'info' | 'appointments' | 'odontogram' | 'billing' | 'ai_summary';
 const TabButton: React.FC<{ active: boolean; onClick: () => void; children: React.ReactNode }> = ({ active, onClick, children }) => (
     <button
         onClick={onClick}
-        className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+        className={`px-3 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap ${
             active
                 ? 'bg-brand-primary text-white shadow'
                 : 'text-text-secondary hover:bg-gray-200'
@@ -27,15 +26,19 @@ const TabButton: React.FC<{ active: boolean; onClick: () => void; children: Reac
 );
 
 const PatientHeader: React.FC<{ patient: Patient; onBack: () => void }> = ({ patient, onBack }) => (
-    <div className="bg-white p-6 rounded-t-lg shadow-md flex items-center">
-        <button onClick={onBack} className="mr-4 p-2 rounded-full hover:bg-gray-200 transition-colors">
-            <BackArrowIcon className="w-6 h-6 text-text-secondary"/>
-        </button>
-        <img src={patient.avatarUrl} alt={patient.name} className="w-20 h-20 rounded-full mr-6 border-4 border-brand-light"/>
-        <div>
-            <h1 className="text-3xl font-bold">{patient.name}</h1>
-            <p className="text-text-secondary">{patient.email} &bull; {patient.phone}</p>
+    <div className="bg-white p-4 md:p-6 rounded-t-lg shadow-md flex flex-col sm:flex-row items-center">
+        <div className="flex items-center w-full">
+            <button onClick={onBack} className="mr-4 p-2 rounded-full hover:bg-gray-200 transition-colors">
+                <BackArrowIcon className="w-6 h-6 text-text-secondary"/>
+            </button>
+            <img src={patient.avatarUrl} alt={patient.name} className="w-16 h-16 md:w-20 md:h-20 rounded-full mr-4 border-4 border-brand-light"/>
+            <div className="overflow-hidden">
+                <h1 className="text-xl md:text-3xl font-bold truncate">{patient.name}</h1>
+                <p className="text-text-secondary text-sm truncate">{patient.email}</p>
+                <p className="text-text-secondary text-sm sm:hidden">{patient.phone}</p>
+            </div>
         </div>
+        <p className="text-text-secondary text-sm hidden sm:block mt-2 sm:mt-0 sm:ml-auto whitespace-nowrap">{patient.phone}</p>
     </div>
 );
 
@@ -58,30 +61,32 @@ const PatientInfo: React.FC<{ patient: Patient }> = ({ patient }) => (
 );
 
 const PatientBilling: React.FC<{ patient: Patient }> = ({ patient }) => (
-    <table className="w-full text-left">
-        <thead className="bg-gray-50 border-b">
-            <tr>
-                <th className="p-3">Date</th>
-                <th className="p-3">Description</th>
-                <th className="p-3">Cost</th>
-                <th className="p-3">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {patient.treatments.map(t => (
-                <tr key={t.id} className="border-b hover:bg-gray-50">
-                    <td className="p-3">{t.date}</td>
-                    <td className="p-3">{t.description}</td>
-                    <td className="p-3">${t.cost.toFixed(2)}</td>
-                    <td className="p-3">
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${t.paid ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                            {t.paid ? 'Paid' : 'Pending'}
-                        </span>
-                    </td>
+    <div className="overflow-x-auto">
+        <table className="w-full text-left min-w-[600px]">
+            <thead className="bg-gray-50 border-b">
+                <tr>
+                    <th className="p-3">Date</th>
+                    <th className="p-3">Description</th>
+                    <th className="p-3">Cost</th>
+                    <th className="p-3">Status</th>
                 </tr>
-            ))}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {patient.treatments.map(t => (
+                    <tr key={t.id} className="border-b hover:bg-gray-50">
+                        <td className="p-3">{t.date}</td>
+                        <td className="p-3">{t.description}</td>
+                        <td className="p-3">${t.cost.toFixed(2)}</td>
+                        <td className="p-3">
+                            <span className={`px-2 py-1 text-xs font-semibold rounded-full ${t.paid ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                {t.paid ? 'Paid' : 'Pending'}
+                            </span>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
 );
 
 const PatientAppointments: React.FC<{ patient: Patient }> = ({ patient }) => (
@@ -125,7 +130,7 @@ const PatientAISummary: React.FC<{ patient: Patient }> = ({ patient }) => {
             </button>
             {isLoading && <div className="text-center p-4">Loading summary...</div>}
             {summary && (
-                <div className="p-4 bg-brand-light rounded-lg prose">
+                <div className="p-4 bg-brand-light rounded-lg prose max-w-none">
                     <h3 className="text-lg font-semibold mb-2">AI Generated Summary</h3>
                     {summary.split('\n').map((line, index) => {
                        if (line.startsWith('* ')) {
@@ -165,12 +170,12 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
   };
 
   return (
-    <div className="p-8 bg-background min-h-full">
+    <div className="p-4 md:p-8 bg-background min-h-full">
       <PatientHeader patient={patient} onBack={onBack} />
       
-      <div className="bg-white p-6 rounded-b-lg shadow-md">
+      <div className="bg-white p-4 md:p-6 rounded-b-lg shadow-md">
         <div className="border-b border-gray-200 mb-6">
-          <nav className="flex space-x-2" aria-label="Tabs">
+          <nav className="flex space-x-2 pb-2 -mb-px overflow-x-auto" aria-label="Tabs">
             <TabButton active={activeTab === 'info'} onClick={() => setActiveTab('info')}>Info</TabButton>
             <TabButton active={activeTab === 'appointments'} onClick={() => setActiveTab('appointments')}>Appointments</TabButton>
             <TabButton active={activeTab === 'odontogram'} onClick={() => setActiveTab('odontogram')}>Odontogram</TabButton>

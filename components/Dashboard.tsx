@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Appointment, Patient } from '../types';
 
@@ -25,7 +24,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ appointments, patients, on
   const todaysAppointments = appointments.filter(a => a.date === today);
 
   return (
-    <div className="p-8 bg-background min-h-full">
+    <div className="p-4 md:p-8 bg-background min-h-full">
       <h1 className="text-3xl font-bold text-text-primary mb-6">Dashboard</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
