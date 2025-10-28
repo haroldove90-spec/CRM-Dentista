@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { PatientList } from './components/PatientList';
@@ -13,7 +13,7 @@ import { MenuIcon } from './components/icons/Icon';
 import { useTranslation } from './context/LanguageContext';
 import { ToothStatus } from './types';
 
-export type View = 'dashboard' | 'patients' | 'calendar' | 'treatment_plans' | 'settings';
+export type View = 'dashboard' | 'patients' | 'agenda' | 'treatment_plans' | 'settings';
 
 const generateInitialOdontogram = (): OdontogramData => {
   const odontogram: OdontogramData = {};
@@ -23,15 +23,35 @@ const generateInitialOdontogram = (): OdontogramData => {
   return odontogram;
 };
 
+const loadState = <T,>(key: string, fallback: T): T => {
+    try {
+        const stored = localStorage.getItem(key);
+        return stored ? JSON.parse(stored) : fallback;
+    } catch (error) {
+        console.error(`Error loading ${key} from localStorage`, error);
+        return fallback;
+    }
+};
+
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('dashboard');
-  const [patients, setPatients] = useState<Patient[]>(mockPatients);
-  const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
-  const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>(mockTreatmentPlans);
+  const [patients, setPatients] = useState<Patient[]>(() => loadState('dentalCrmPatients', mockPatients));
+  const [appointments, setAppointments] = useState<Appointment[]>(() => loadState('dentalCrmAppointments', mockAppointments));
+  const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>(() => loadState('dentalCrmTreatmentPlans', mockTreatmentPlans));
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    try {
+        localStorage.setItem('dentalCrmPatients', JSON.stringify(patients));
+        localStorage.setItem('dentalCrmAppointments', JSON.stringify(appointments));
+        localStorage.setItem('dentalCrmTreatmentPlans', JSON.stringify(treatmentPlans));
+    } catch (error) {
+        console.error('Error saving state to localStorage', error);
+    }
+  }, [patients, appointments, treatmentPlans]);
 
   const handleSelectPatient = (id: number) => {
     setSelectedPatientId(id);
@@ -45,17 +65,17 @@ const App: React.FC = () => {
     );
   };
   
-  const handleAddNewPatient = (patientData: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files' | 'avatarUrl'>) => {
+  const handleAddNewPatient = (patientData: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files'>) => {
       const newPatient: Patient = {
           ...patientData,
           id: Date.now(),
-          avatarUrl: `https://picsum.photos/seed/${Date.now()}/200/200`,
+          avatarUrl: patientData.avatarUrl || `https://picsum.photos/seed/${Date.now()}/200/200`,
           appointments: [],
           treatments: [],
           files: [],
           odontogram: generateInitialOdontogram(),
       };
-      setPatients(prev => [...prev, newPatient]);
+      setPatients(prev => [newPatient, ...prev]);
   };
 
   const handleAddNewAppointment = (appointmentData: Omit<Appointment, 'id' | 'patientName' | 'status'>) => {
@@ -68,7 +88,7 @@ const App: React.FC = () => {
           patientName: patient.name,
           status: 'confirmed',
       };
-      setAppointments(prev => [...prev, newAppointment]);
+      setAppointments(prev => [...prev, newAppointment].sort((a, b) => a.time.localeCompare(b.time)));
       // Also add to patient's record
       const updatedPatient = { ...patient, appointments: [...patient.appointments, newAppointment]};
       handleUpdatePatient(updatedPatient);
@@ -96,7 +116,7 @@ const App: React.FC = () => {
         return <Dashboard appointments={appointments} patients={patients} onSelectPatient={handleSelectPatient} />;
       case 'patients':
         return <PatientList patients={patients} onSelectPatient={handleSelectPatient} onAddPatient={handleAddNewPatient} />;
-      case 'calendar':
+      case 'agenda':
         return <CalendarView appointments={appointments} patients={patients} onAddAppointment={handleAddNewAppointment} />;
       case 'treatment_plans':
         return <TreatmentPlans plans={treatmentPlans} patients={patients} onAddPlan={handleAddTreatmentPlan} />;
@@ -113,7 +133,7 @@ const App: React.FC = () => {
     const viewTitleMap: { [key in View]: string } = {
         'dashboard': 'dashboard.title',
         'patients': 'patientList.title',
-        'calendar': 'calendar.title',
+        'agenda': 'agenda.title',
         'treatment_plans': 'treatmentPlans.title',
         'settings': 'settings.title'
     };

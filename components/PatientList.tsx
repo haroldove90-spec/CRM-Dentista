@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import type { Patient } from '../types';
 import { useTranslation } from '../context/LanguageContext';
@@ -6,7 +7,7 @@ import { AddPatientModal } from './AddPatientModal';
 interface PatientListProps {
   patients: Patient[];
   onSelectPatient: (id: number) => void;
-  onAddPatient: (patient: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files' | 'avatarUrl'>) => void;
+  onAddPatient: (patient: Omit<Patient, 'id' | 'appointments' | 'treatments' | 'odontogram' | 'files'>) => void;
 }
 
 export const PatientList: React.FC<PatientListProps> = ({ patients, onSelectPatient, onAddPatient }) => {

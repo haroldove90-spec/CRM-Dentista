@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { View } from '../App';
 import { DashboardIcon, PatientsIcon, CalendarIcon, SettingsIcon, ToothIcon, LogoutIcon, CloseIcon, TreatmentPlanIcon } from './icons/Icon';
@@ -61,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, clearSele
         <ul>
           <NavItem icon={<DashboardIcon />} label={t('sidebar.dashboard')} isActive={activeView === 'dashboard'} onClick={() => handleSetView('dashboard')} />
           <NavItem icon={<PatientsIcon />} label={t('sidebar.patients')} isActive={activeView === 'patients'} onClick={() => handleSetView('patients')} />
-          <NavItem icon={<CalendarIcon />} label={t('sidebar.calendar')} isActive={activeView === 'calendar'} onClick={() => handleSetView('calendar')} />
+          <NavItem icon={<CalendarIcon />} label={t('sidebar.agenda')} isActive={activeView === 'agenda'} onClick={() => handleSetView('agenda')} />
           <NavItem icon={<TreatmentPlanIcon />} label={t('sidebar.treatmentPlans')} isActive={activeView === 'treatment_plans'} onClick={() => handleSetView('treatment_plans')} />
           <NavItem icon={<SettingsIcon />} label={t('sidebar.settings')} isActive={activeView === 'settings'} onClick={() => handleSetView('settings')} />
         </ul>
@@ -82,6 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, clearSele
                 EN
             </button>
         </div>
+        <p className="text-xs text-center text-gray-400 mt-4 px-2">Desarrollada por Harold Anguiano para App Design.</p>
       </div>
 
       <div>

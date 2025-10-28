@@ -7,7 +7,7 @@ const es = {
     "title": "Dra. Magda Zavala",
     "dashboard": "Dashboard",
     "patients": "Pacientes",
-    "calendar": "Calendario",
+    "agenda": "Agenda",
     "treatmentPlans": "Planes de Tratamiento",
     "settings": "Configuración",
     "logout": "Cerrar Sesión"
@@ -76,8 +76,9 @@ const es = {
     "statusInProgress": "En Progreso",
     "statusCompleted": "Completado"
   },
-  "calendar": {
-    "title": "Calendario"
+  "agenda": {
+    "title": "Agenda",
+    "today": "Hoy"
   },
   "settings": {
     "title": "Configuración",
@@ -114,7 +115,11 @@ const es = {
     "aiPlaceholder": "Notas del paciente para la IA (ej: caries en diente #3, necesita corona en #18)...",
     "generateWithAI": "Generar con IA",
     "proceduresList": "Procedimientos del Plan",
-    "noProcedures": "Añada procedimientos manualmente o use la IA."
+    "noProcedures": "Añada procedimientos manualmente o use la IA.",
+    "patientPhoto": "Foto del Paciente",
+    "uploadImage": "Subir Imagen",
+    "takePhoto": "Tomar Foto",
+    "capture": "Capturar"
   }
 };
 
@@ -124,7 +129,7 @@ const en = {
     "title": "Dr. Magda Zavala",
     "dashboard": "Dashboard",
     "patients": "Patients",
-    "calendar": "Calendar",
+    "agenda": "Agenda",
     "treatmentPlans": "Treatment Plans",
     "settings": "Settings",
     "logout": "Logout"
@@ -193,8 +198,9 @@ const en = {
     "statusInProgress": "In Progress",
     "statusCompleted": "Completed"
   },
-  "calendar": {
-    "title": "Calendar"
+  "agenda": {
+    "title": "Agenda",
+    "today": "Today"
   },
   "settings": {
     "title": "Settings",
@@ -231,7 +237,11 @@ const en = {
     "aiPlaceholder": "Patient notes for AI (e.g., caries on tooth #3, needs crown on #18)...",
     "generateWithAI": "Generate with AI",
     "proceduresList": "Plan Procedures",
-    "noProcedures": "Add procedures manually or use the AI assistant."
+    "noProcedures": "Add procedures manually or use the AI assistant.",
+    "patientPhoto": "Patient Photo",
+    "uploadImage": "Upload Image",
+    "takePhoto": "Take Photo",
+    "capture": "Capture"
   }
 };
 
