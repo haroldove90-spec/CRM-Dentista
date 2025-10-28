@@ -37,6 +37,14 @@ export interface Appointment {
   status: 'confirmed' | 'completed' | 'cancelled';
 }
 
+export interface ClinicalFile {
+  id: number;
+  name: string;
+  type: 'image' | 'document';
+  url: string; // Data URL for simplicity
+  uploadDate: string;
+}
+
 export interface Patient {
   id: number;
   name: string;
@@ -51,6 +59,7 @@ export interface Patient {
   appointments: Appointment[];
   treatments: Treatment[];
   odontogram: OdontogramData;
+  files: ClinicalFile[];
 }
 
 export interface TreatmentPlanProcedure {

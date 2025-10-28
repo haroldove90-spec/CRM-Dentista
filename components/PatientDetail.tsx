@@ -1,6 +1,8 @@
+
 import React, { useState, useCallback } from 'react';
-import type { Patient, OdontogramData } from '../types';
+import type { Patient, OdontogramData, Treatment, ClinicalFile } from '../types';
 import { Odontogram } from './Odontogram';
+import { PatientFiles } from './PatientFiles';
 import { generatePatientSummary } from '../services/geminiService';
 import { BackArrowIcon } from './icons/Icon';
 import { useTranslation } from '../context/LanguageContext';
@@ -11,7 +13,7 @@ interface PatientDetailProps {
   onUpdatePatient: (patient: Patient) => void;
 }
 
-type Tab = 'info' | 'appointments' | 'odontogram' | 'billing' | 'ai_summary';
+type Tab = 'info' | 'appointments' | 'odontogram' | 'billing' | 'files' | 'ai_summary';
 
 const TabButton: React.FC<{ active: boolean; onClick: () => void; children: React.ReactNode }> = ({ active, onClick, children }) => (
     <button
@@ -64,34 +66,74 @@ const PatientInfo: React.FC<{ patient: Patient }> = ({ patient }) => {
     );
 };
 
-const PatientBilling: React.FC<{ patient: Patient }> = ({ patient }) => {
+const PatientBilling: React.FC<{ patient: Patient; onUpdatePatient: (patient: Patient) => void; }> = ({ patient, onUpdatePatient }) => {
     const { t } = useTranslation();
+    const [showAddCharge, setShowAddCharge] = useState(false);
+    const [newCharge, setNewCharge] = useState({ description: '', cost: '' });
+
+    const handleTogglePaid = (treatmentId: number) => {
+        const updatedTreatments = patient.treatments.map(t => 
+            t.id === treatmentId ? { ...t, paid: !t.paid } : t
+        );
+        onUpdatePatient({ ...patient, treatments: updatedTreatments });
+    };
+
+    const handleAddCharge = () => {
+        if (!newCharge.description || !newCharge.cost) return;
+        const newTreatment: Treatment = {
+            id: Date.now(),
+            date: new Date().toISOString().split('T')[0],
+            description: newCharge.description,
+            cost: parseFloat(newCharge.cost),
+            paid: false,
+        };
+        onUpdatePatient({ ...patient, treatments: [...patient.treatments, newTreatment] });
+        setNewCharge({ description: '', cost: '' });
+        setShowAddCharge(false);
+    };
+
     return (
-        <div className="overflow-x-auto">
-            <table className="w-full text-left min-w-[600px]">
-                <thead className="bg-gray-50 border-b">
-                    <tr>
-                        <th className="p-3">{t('patientDetail.billingDate')}</th>
-                        <th className="p-3">{t('patientDetail.billingDescription')}</th>
-                        <th className="p-3">{t('patientDetail.billingCost')}</th>
-                        <th className="p-3">{t('patientDetail.billingStatus')}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {patient.treatments.map(t => (
-                        <tr key={t.id} className="border-b hover:bg-gray-50">
-                            <td className="p-3">{t.date}</td>
-                            <td className="p-3">{t.description}</td>
-                            <td className="p-3">${t.cost.toFixed(2)}</td>
-                            <td className="p-3">
-                                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${t.paid ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                                    {t.paid ? t('patientDetail.paid') : t('patientDetail.pending')}
-                                </span>
-                            </td>
+        <div>
+            <div className="flex justify-end mb-4">
+                <button onClick={() => setShowAddCharge(!showAddCharge)} className="bg-brand-primary text-white px-4 py-2 rounded-lg shadow hover:bg-brand-dark transition-colors text-sm">
+                   {showAddCharge ? t('modals.cancel') : t('patientDetail.addCharge')}
+                </button>
+            </div>
+
+            {showAddCharge && (
+                <div className="flex gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
+                    <input type="text" placeholder={t('patientDetail.billingDescription')} value={newCharge.description} onChange={e => setNewCharge({...newCharge, description: e.target.value})} className="flex-grow p-2 border rounded-md"/>
+                    <input type="number" placeholder={t('patientDetail.billingCost')} value={newCharge.cost} onChange={e => setNewCharge({...newCharge, cost: e.target.value})} className="w-24 p-2 border rounded-md"/>
+                    <button onClick={handleAddCharge} className="bg-green-500 text-white px-3 rounded-md hover:bg-green-600 font-bold">+</button>
+                </div>
+            )}
+        
+            <div className="overflow-x-auto">
+                <table className="w-full text-left min-w-[600px]">
+                    <thead className="bg-gray-50 border-b">
+                        <tr>
+                            <th className="p-3">{t('patientDetail.billingDate')}</th>
+                            <th className="p-3">{t('patientDetail.billingDescription')}</th>
+                            <th className="p-3 text-right">{t('patientDetail.billingCost')}</th>
+                            <th className="p-3 text-center">{t('patientDetail.billingStatus')}</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {patient.treatments.map(t => (
+                            <tr key={t.id} className="border-b hover:bg-gray-50">
+                                <td className="p-3">{t.date}</td>
+                                <td className="p-3">{t.description}</td>
+                                <td className="p-3 text-right">${t.cost.toFixed(2)}</td>
+                                <td className="p-3 text-center">
+                                    <button onClick={() => handleTogglePaid(t.id)} className={`px-2 py-1 text-xs font-semibold rounded-full w-20 transition-colors ${t.paid ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'}`}>
+                                        {t.paid ? t('patientDetail.paid') : t('patientDetail.pending')}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
@@ -160,6 +202,11 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
   const handleOdontogramUpdate = (newOdontogram: OdontogramData) => {
     onUpdatePatient({ ...patient, odontogram: newOdontogram });
   };
+  
+  const handleFileUpload = (file: Omit<ClinicalFile, 'id'>) => {
+    const newFile = { ...file, id: Date.now() };
+    onUpdatePatient({ ...patient, files: [...patient.files, newFile] });
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -170,7 +217,9 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
       case 'odontogram':
         return <Odontogram data={patient.odontogram} onUpdate={handleOdontogramUpdate} />;
       case 'billing':
-        return <PatientBilling patient={patient} />;
+        return <PatientBilling patient={patient} onUpdatePatient={onUpdatePatient} />;
+      case 'files':
+        return <PatientFiles patient={patient} onFileUpload={handleFileUpload} />;
       case 'ai_summary':
         return <PatientAISummary patient={patient} />;
       default:
@@ -189,6 +238,7 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({ patient, onBack, o
             <TabButton active={activeTab === 'appointments'} onClick={() => setActiveTab('appointments')}>{t('patientDetail.tabAppointments')}</TabButton>
             <TabButton active={activeTab === 'odontogram'} onClick={() => setActiveTab('odontogram')}>{t('patientDetail.tabOdontogram')}</TabButton>
             <TabButton active={activeTab === 'billing'} onClick={() => setActiveTab('billing')}>{t('patientDetail.tabBilling')}</TabButton>
+            <TabButton active={activeTab === 'files'} onClick={() => setActiveTab('files')}>{t('patientDetail.tabFiles')}</TabButton>
             <TabButton active={activeTab === 'ai_summary'} onClick={() => setActiveTab('ai_summary')}>{t('patientDetail.tabAiSummary')}</TabButton>
           </nav>
         </div>

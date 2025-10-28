@@ -1,4 +1,5 @@
-import type { Patient, Appointment, OdontogramData, TreatmentPlan } from '../types';
+
+import type { Patient, Appointment, OdontogramData, TreatmentPlan, ClinicalFile } from '../types';
 import { ToothStatus } from '../types';
 
 const generateInitialOdontogram = (): OdontogramData => {
@@ -53,6 +54,10 @@ export const mockPatients: Patient[] = [
       { id: 3, date: '2022-07-22', description: 'Extraction - Tooth #30', cost: 150, paid: true, toothIds: [30] },
     ],
     odontogram: odontogram1,
+    files: [
+      { id: 1, name: 'radiografia-panoramica.jpg', type: 'image', url: 'https://picsum.photos/seed/xray/400/300', uploadDate: '2023-10-10' },
+      { id: 2, name: 'historial-medico.pdf', type: 'document', url: '#', uploadDate: '2023-09-01' },
+    ],
   },
   {
     id: 2,
@@ -71,6 +76,7 @@ export const mockPatients: Patient[] = [
       { id: 5, date: '2024-01-20', description: 'Regular Cleaning', cost: 80, paid: true },
     ],
     odontogram: odontogram2,
+    files: [],
   },
   {
     id: 3,
@@ -88,6 +94,7 @@ export const mockPatients: Patient[] = [
         { id: 6, date: '2023-09-12', description: 'Dental Implant - Tooth #19', cost: 2300, paid: true, toothIds: [19] }
     ],
     odontogram: odontogram3,
+    files: [],
   },
 ];
 

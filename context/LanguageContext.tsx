@@ -40,6 +40,7 @@ const es = {
     "tabAppointments": "Citas",
     "tabOdontogram": "Odontograma",
     "tabBilling": "Facturación",
+    "tabFiles": "Archivos",
     "tabAiSummary": "Resumen IA",
     "personalDetails": "Detalles Personales",
     "dob": "Fecha de Nacimiento:",
@@ -57,10 +58,15 @@ const es = {
     "generateSummary": "Generar Resumen IA",
     "generating": "Generando...",
     "loadingSummary": "Cargando resumen...",
-    "aiSummaryTitle": "Resumen Generado por IA"
+    "aiSummaryTitle": "Resumen Generado por IA",
+    "clinicalFiles": "Archivos Clínicos",
+    "uploadFile": "Subir Archivo",
+    "noFiles": "No hay archivos para este paciente.",
+    "addCharge": "Añadir Cargo"
   },
   "treatmentPlans": {
     "title": "Planes de Tratamiento",
+    "addNew": "Crear Nuevo Plan",
     "patient": "Paciente",
     "plan": "Plan",
     "status": "Estado",
@@ -75,7 +81,40 @@ const es = {
   },
   "settings": {
     "title": "Configuración",
-    "description": "Gestiona la configuración de tu clínica aquí. Esta función está en construcción."
+    "description": "Gestiona la configuración de tu clínica aquí.",
+    "clinicInfo": "Información de la Clínica",
+    "clinicName": "Nombre de la Clínica",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "email": "Email",
+    "userProfile": "Perfil de Usuario",
+    "name": "Nombre",
+    "specialization": "Especialización",
+    "billingCurrency": "Facturación y Moneda",
+    "currency": "Moneda",
+    "save": "Guardar Cambios",
+    "saveSuccess": "¡Configuración guardada!"
+  },
+  "modals": {
+    "addPatientTitle": "Añadir Nuevo Paciente",
+    "addAppointmentTitle": "Añadir Nueva Cita",
+    "createPlanTitle": "Crear Plan de Tratamiento",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "savePlan": "Guardar Plan",
+    "fillAllFields": "Por favor, rellene todos los campos obligatorios.",
+    "email": "Email",
+    "phone": "Teléfono",
+    "date": "Fecha",
+    "selectPatient": "Seleccionar un paciente",
+    "duration": "Duración (minutos)",
+    "manualCreation": "Creación Manual",
+    "aiCreation": "Asistente IA",
+    "selectProcedure": "Seleccionar procedimiento",
+    "aiPlaceholder": "Notas del paciente para la IA (ej: caries en diente #3, necesita corona en #18)...",
+    "generateWithAI": "Generar con IA",
+    "proceduresList": "Procedimientos del Plan",
+    "noProcedures": "Añada procedimientos manualmente o use la IA."
   }
 };
 
@@ -118,6 +157,7 @@ const en = {
     "tabAppointments": "Appointments",
     "tabOdontogram": "Odontogram",
     "tabBilling": "Billing",
+    "tabFiles": "Files",
     "tabAiSummary": "AI Summary",
     "personalDetails": "Personal Details",
     "dob": "Date of Birth:",
@@ -135,10 +175,15 @@ const en = {
     "generateSummary": "Generate AI Summary",
     "generating": "Generating...",
     "loadingSummary": "Loading summary...",
-    "aiSummaryTitle": "AI Generated Summary"
+    "aiSummaryTitle": "AI Generated Summary",
+    "clinicalFiles": "Clinical Files",
+    "uploadFile": "Upload File",
+    "noFiles": "There are no files for this patient.",
+    "addCharge": "Add Charge"
   },
   "treatmentPlans": {
     "title": "Treatment Plans",
+    "addNew": "Create New Plan",
     "patient": "Patient",
     "plan": "Plan",
     "status": "Status",
@@ -153,7 +198,40 @@ const en = {
   },
   "settings": {
     "title": "Settings",
-    "description": "Manage your clinic settings here. This feature is under construction."
+    "description": "Manage your clinic settings here.",
+    "clinicInfo": "Clinic Information",
+    "clinicName": "Clinic Name",
+    "phone": "Phone",
+    "address": "Address",
+    "email": "Email",
+    "userProfile": "User Profile",
+    "name": "Name",
+    "specialization": "Specialization",
+    "billingCurrency": "Billing & Currency",
+    "currency": "Currency",
+    "save": "Save Changes",
+    "saveSuccess": "Settings saved!"
+  },
+  "modals": {
+    "addPatientTitle": "Add New Patient",
+    "addAppointmentTitle": "Add New Appointment",
+    "createPlanTitle": "Create Treatment Plan",
+    "cancel": "Cancel",
+    "save": "Save",
+    "savePlan": "Save Plan",
+    "fillAllFields": "Please fill in all required fields.",
+    "email": "Email",
+    "phone": "Phone",
+    "date": "Date",
+    "selectPatient": "Select a patient",
+    "duration": "Duration (minutes)",
+    "manualCreation": "Manual Creation",
+    "aiCreation": "AI Assistant",
+    "selectProcedure": "Select procedure",
+    "aiPlaceholder": "Patient notes for AI (e.g., caries on tooth #3, needs crown on #18)...",
+    "generateWithAI": "Generate with AI",
+    "proceduresList": "Plan Procedures",
+    "noProcedures": "Add procedures manually or use the AI assistant."
   }
 };
 
